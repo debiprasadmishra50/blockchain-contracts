@@ -1,0 +1,872 @@
+Application Ecosystem
+------------------------------
+    - Centralized: App that run on a single server or a single computer and performs its various functions under a single authority.
+
+    - Decentralized: also known as "dApps" or "dapps"—are digital applications that run on a blockchain network of computers instead of relying on a single computer. Because dApps are decentralized, they are free from the control and interference of a single authority.
+
+- Dapps have their backend code (smart contracts) running on a decentralized network and not a centralized server. They use the Ethereum blockchain for data storage and smart contracts for their app logic. A smart contract is like a set of rules that live on-chain for all to see and run exactly according to those rules.
+
+- Dapps enable peer-to-peer(P2P) communication/trading/transaction without involvement of a third-party or a middleware.
+
+https://www.youtube.com/watch?v=3xGLc-zz9cA&list=RDLV93E_GzvpMA0&index=2
+
+https://www.youtube.com/watch?v=93E_GzvpMA0
+
+Blockchain and Ethereum
+=======================================
+- Blockchain is a shared, immutable ledger that facilitates the process of recording transactions and tracking assets in a business network. An asset can be tangible (a house, car, cash, land) or intangible (intellectual property, patents, copyrights, branding). Virtually anything of value can be tracked and traded on a blockchain network, reducing risk and cutting costs for all involved.
+
+https://ethereum.org/en/developers/docs/intro-to-ethereum/
+
+
+    History
+    -------------------
+        - Oct 31, 2008: Origin of Bitcoin white paper. The paper described the creation of a system that would allow people each other directly without need for a central authority like a bank. 
+
+        - The Bitcoin network was eventually brought online on Jan 2009, the original bitcoin network. The idea was based on idea of a blockchain.
+
+        - The blockchain tech was then evolved and used to create different complex applications 
+
+        - So, was the born of Ethereum, to enable creation of decentralised autonomous corporation
+
+        - It introduced the idea of Smart Contract as an entity that can send and receive currency, beyond the humans. 
+
+        - The Ethereum network became online on july 30th 2015.
+
+    Types of blockchain networks
+    ---------------------------------------
+    - Public blockchain networks
+        A public blockchain is one that anyone can join and participate in, such as Bitcoin. Drawbacks might include substantial computational power required, little or no privacy for transactions, and weak security. These are important considerations for enterprise use cases of blockchain.
+
+    - Private blockchain networks
+        A private blockchain network, similar to a public blockchain network, is a decentralized peer-to-peer network. However, one organization governs the network, controlling who is allowed to participate, execute a consensus protocol and maintain the shared ledger. Depending on the use case, this can significantly boost trust and confidence between participants. A private blockchain can be run behind a corporate firewall and even be hosted on premises.
+
+    - Permissioned blockchain networks
+        Businesses who set up a private blockchain will generally set up a permissioned blockchain network. It is important to note that public blockchain networks can also be permissioned. This places restrictions on who is allowed to participate in the network and in what transactions. Participants need to obtain an invitation or permission to join.
+
+    - Consortium blockchains
+        Multiple organizations can share the responsibilities of maintaining a blockchain. These pre-selected organizations determine who may submit transactions or access the data. A consortium blockchain is ideal for business when all participants need to be permissioned and have a shared responsibility for the blockchain.
+
+    Bitcoin: 
+        A Peer-to-Peer Electronic Cash System (https://bitcoin.org/bitcoin.pdf)
+
+    Ethereum: 
+        The Ultimate Smart Contract and Decentralized Application Platform (http://web.archive.org/web/20131228111141/http://vbuterin.com/ethereum.html)
+
+
+    What is Ethereum
+    --------------------------------
+        - In Ethereum, we are dealing with a series of computers and networks. 
+
+        - Ethereum networks are used to transfer money and store data.
+
+        - There are many Ethereum networks. like Main, Test, Private...
+
+        - Networks are formed by one or more nodes.
+
+        - Each node is a machine running an ethereum client
+
+        - Anyone can run a node
+
+        - Each node can contain a full copy of the blockchain.
+
+        - The blockchain is a database that stores a record of every movement of money between different parties or record of every transaction that has ever taken place.
+
+
+    Interfacing with Ethereum Networks
+    --------------------------------------------
+        - For Developers: web3.js
+
+        - For Consumers: Extension: Metamask
+                         Mint Browser
+
+
+    Metamask Account
+    -----------------------
+        Account Address: unique identifier
+
+        Public Key: 
+
+        Private Key: 
+
+        - public and private key combinely form a password to send funds
+
+        - Account Address, public and private key are stored as hexadecimal numbers
+
+        - To see the decimal value, in web console, write
+            0x<hex_number>
+
+    Ethereum Networks
+    ------------------------
+        Main Network
+
+        Ropsten Test Network
+
+        Kovan Test Network
+
+        Rinkeby Test Network
+
+        Goerli Test Network
+
+        localhost 8545
+
+
+https://faucets.chain.link/rinkeby
+
+https://faucet.rinkeby.io/
+
+https://www.rinkeby.io/#stats
+
+
+
+    
+    What is a transaction
+    --------------------------------
+        - A transaction is described as one account attempting to send money to another account
+
+        - During transaction, a object is created and submitted to Ethereum network to be processed
+
+        - This object has different properties:
+            1. nonce: How many times the sender has sent a transaction
+
+            2. to: address of account this money is going to
+
+            3. value: Amount of ether to send to the target address
+
+            4. gasPrice: Amount of ether the sender is willing to pay per unit gas to get this transaction processed
+
+            5. startGas/gasLimit: units of gas that this transaction can consume
+
+            6. v: 
+            7. r:
+            8: s: 
+                Cryptographic pieces of data that can be used to generate the senders account address. Generated from the sender's private key.
+     
+    - When users want to make a transaction, they must pay ether to have their transaction recognized on the blockchain. These usage costs are known as gas fees, and the gas fee depends on the amount of computing power required to execute the transaction and the network-wide demand for computing power at the time.
+
+    Mining Process
+    --------------------
+    1. When we send a transaction object into a Ethereum network, it gets connected to a node in the network
+
+    2. The node collects several of these transactions and combines them as one block to get processed in the blockchain i.e, inside the node.
+
+    3. The node then runs some validation logic on the block to make this authentic, and that validation logic takes some amount of time to run and provide a response and is called mining or crypto-mining.
+
+    https://andersbrownworth.com/blockchain/
+
+
+    Block Time
+    ----------------------
+        - The amount of time it takes to find an appropriate nonce value to generate a required hash and complete the mining process is called block time.
+
+        - Ethereum network has an ideal target block-time of 15 secs. After that the network will move to next block. But in practice, it is variable.
+
+    
+
+    Smart Contracts
+    --------------------------
+        - An account controlled by code.
+        Contract Account
+        -------------------
+            Fields                      Description
+          -----------                 ----------------
+            balance                 Amount of ether this account owns
+
+            storage                 Data storage for this contract
+
+            code                    Raw machine code for this contract
+
+        - The Metamask account owned by User/Individual, it is a external account. They are completel de-coupled from an individual networks, and reside in their own universe.
+
+        - It can be used to connect to any of the network like Main/Rinkeby/Kovan...
+
+        - Contract Accounts are specific to individual network. It can not be accessed in other network.
+
+    
+
+    Solidity
+    ----------------
+        - A programming language invented for developing smart contracts 
+
+        - Written in .sol files
+
+        - strongly typed 
+
+        - similar to javascript
+
+        - Has several huge gigantic 'gotchas'
+
+        
+                Contract Definition
+                    (Solidity)
+                        |
+                        |
+                        v
+                Solidity Compiler
+                        |
+                        |
+            ---------------------------------
+            V                               V
+        Byte code                   Application Binary
+        ready for                   Interface (ABI)
+        deployment
+
+
+    https://remix.ethereum.org/
+
+    
+    A Simple Contract
+    -----------------------
+    pragma solidity ^0.4.17;
+
+    contract Inbox {
+        string public message;
+
+        function Inbox(string initialMessage) public {
+            message = initialMessage;
+        }
+
+        function setMessage(string newMessage) public {
+            message = newMessage;
+        }
+
+        function getMessage() public view returns (string) {
+            return message;
+        }
+    }
+
+
+    pragma solidity ^0.4.17;
+        Specifies the version of solidity that our code is written with
+    
+    contract Inbox {
+        Defines a new contract(like classes) that will have some number of methods and variables
+
+    string public message;
+        Storage/Instance variable that will exist for the life of the contract.
+
+        type scope <variable-name>;
+
+    function Inbox(string initialMessage) public {
+        Constructor function, automatically ccalled when the contract is first created
+
+
+    Variable Declrations
+    --------------------------
+    Basic Types
+    --------------------
+    string              Sequence of characters                  "Hi There"
+
+    bool                Boolean Value                           true / false
+
+    int                 Integer, positive / negative,           1, -200, 0
+                        no decimal
+
+    uint                Unsigned Integer, Positive number       0, 10, 1000
+                        no decimal
+
+    fixed / ufixed      Fixed point number, Number with decimal  20.01, -10.23
+
+    address             Has methods tied to it for sending money    0x141bhjv1g41v2412j4k14hj1b24h1j...
+
+
+    Reference Types
+    -----------------------
+    fixed array             Array that contains a single type of element. Has an unchanging length.         int[3] -> [1, 2, 3]
+
+    dynamic array           Array that contains a single type of element. Can change in size over time.     int[] -> [1, 2, 3]
+
+    mapping                 Collection of key, value pairs. Think of objects in JS, Ruby hashes, Python     mapping(int => bool)
+                            dictionaries, Java Maps. All keys must be of same type, and all values          mapping (string => string)
+                            must be of the same type. 
+
+    struct                  Collection of key value pairs that can have different types                     struct Car {
+                                                                                                                string make;
+                                                                                                                string model;
+                                                                                                                uint value;
+                                                                                                            }
+
+
+
+
+    Function Declarations
+    ----------------------------
+        function <function-name>() <function-type> <return-type> { 
+
+        } 
+
+        function types
+        -----------------
+            public    - Anyone can call this function
+
+            private   - Only this contract can call this function
+
+            view      - This function returns data and does not modify the contract's data, can read data from bockchain
+                OR
+            constant  - This function returns data and does not modify the contract's data
+
+            pure      - This function will not modify or even read the contract's data, can not read data from blockchain
+
+            payable   - When someone call this function they might send ether along
+            /////////////////////////////////////////////
+            public - all can access
+
+            external - Can NOT be accessed internally, only externally
+
+            internal - only this contract and contracts deriving from it can access
+
+            private - can be accessed only from this contract
+
+
+    /* 
+    // Getter method is provided by compiler if the storage scope is public
+    function getMessage() public view returns (string) {
+        return message;
+    }
+     */
+
+    
+    
+    Behind the scene
+    ------------------------------
+        - Creating a contract is very similar to transfer of money between two parties.
+
+        - whenever we want to send money from one person to another we are going to create a new transaction. 
+
+        - This transaction will have the purpose to create a new contract. and we are going to send that from our account to a specific network and that's what make sure that specific network(rinkeby) attempts to create a new contract.
+
+    
+    External account to create a Contract Transaction 
+    -----------------------------------------------------
+        1. nonce: How many times the sender has sent a transaction
+
+        2. to: <BLANK>, this shows we are going to create a new contract
+
+        3. data: Compiled bytecode of the contract
+
+        3. value: Amount of Wei to send to the target address
+
+        4. gasPrice: Amount of Wei the sender is willing to pay per unit gas to get this transaction processed
+
+        5. startGas/gasLimit: units of gas that this transaction can consume
+
+        6. v: 
+        7. r:
+        8: s: 
+            Cryptographic pieces of data that can be used to generate the senders account address. Generated from the sender's private key.
+
+
+    - Any time we want to change any data in blockchain, we have to submit a transaction and wait for it to be mined, or to go through that validation algorithm which can take from 10 to 30 secs to get approved.
+
+
+    - In above contract, setMessage involves a transaction as it is modifying the message data that is stored in Inbox contract, however, getMessage des not involve a transaction.
+
+    - There are 2 ways in which we invoke functions that belong to our contracts and they result in very different behaviour.
+
+    Calling a Function                  Sending a transaction to a function
+    ----------------------              ----------------------------------------
+    Can not modify contract's data      Can modify contract's data
+    
+    Can return data                     Returns transaction hash
+    
+    Runs instantly                      Takes time to execute
+
+    Free to do                          Costs money!
+
+
+
+    Wei vs Ether
+    ---------------
+        - They're different unit of measurement for Ethereum.
+
+        like 1$ = 100cents
+
+        1 Ether = 1,000,000,000,000,000,000 wei
+
+        - other units: wei, Gwei, Finney, Ether
+
+    
+    Gas and Transaction
+    ---------------------------------
+        - In order to get someone else or some other service to run our contracts we have to pay them some money. 
+
+        - This mone is reflected in terms of gas
+
+        - When we send a transaction to Ethereum network, there is some amount of gas price attached to it.
+
+        - Search google for gas price for yellow paper
+
+        - GasPrice: Amount of wei the sender is willing to pay per unit gas to get this transaction processed
+
+        - startGas/gasLimit: units of gas that this transaction can consume
+
+        - Total cost to execute one transaction: 
+                gasPrice * gasRequired
+        
+    
+
+    Mnemonic Phrases
+    -----------------------------
+        - BIP39 mnemonic algorithm
+
+        https://iancoleman.io/bip39/
+
+        - Generate accounts from 12 word mnemonic
+
+    
+
+    Contract deployment
+    -------------------------
+        - To deploy remix editor takes care of that but for production, we need to use our own editor
+
+        - To generate ABI and the byteCode, we use "Truffle"
+
+        Truffle
+        --------------
+            Contract Creation
+
+            Local Testing       ---------->     Rinkeby
+
+            Deployment
+
+
+    - https://trufflesuite.com/
+
+
+
+    Boilerplate Design
+    ---------------------------
+    Issue                           Solution
+    ---------                   -----------------------
+    Need to be able to          Set up the Solidity compiler 
+    write Solidity code         to build our contracts
+    in a JS project
+
+    Need some way to            Set up a custom Mocha test
+    rapidly test contracts      runner that can somehow test
+    without doing the manual    Solidity code
+    testing like in remix
+
+    Need some way to deploy     Set up adeploy script to 
+    our contract to public      compile + deploy our contract
+    networks
+
+    - solc lib for solidity compiler
+    - Ganache/TestRPC to create a local Eth Test Network
+    - web3 lib as a portal to connect with contract
+
+
+directory structure
+    contracts
+    scripts
+    tests
+
+ 
+>> npm i solc mocha ganache-cli web3@1.0.0-beta.26
+
+
+    Web3.js
+    ------------------  
+        - require the constructor function from web3
+        - create and instance of it
+        - To create an instance we need to make some configuration and we have to set up a "provider"
+        - provider can be thought of as a communication layer between web3 and some Ethereum Network
+        - Every provider connecting to different networks has identical set of networks on it
+
+        - They allow web3 to send request and receive response
+
+    
+    Testing with Mocha
+    ------------------------------
+        it          Run a test and make an assertion
+
+        describe    Groups together "it" functions
+
+        beforeEach  Execute some general setup code
+
+        class Car {
+            park() {
+                return "stopped";
+            }
+
+            drive() {
+                return "vroom";
+            }
+        }
+
+        let car;
+        beforeEach("Car setup", () => {
+            car = new Car();
+        });
+
+        describe("Car", () => {
+            it("car parking", () => {
+                // const car = new Car();
+
+                assert.equal(car.park(), "stopped");
+                // assert.equal(car.park(), "stoppedd");
+            });
+
+            it("car drive", () => {
+                // const car = new Car();
+
+                assert.equal(car.drive(), "vroom");
+            });
+        });
+
+
+Control Flow
+------------------
+    1. Mocha Starts
+
+    2. Deploy a new contract (beforeEach)
+
+    3. Manipulate the contract (it)
+
+    4. Make an assertion about the contract (it) ----> go to 2
+
+
+Infura API
+-------------------------
+    - Like ganache, but deploys to real rinkeby test network
+
+    https://infura.io/
+
+
+    PROJECT ID
+    4279d3142bcf4543bd4e27b2fe31738c
+    PROJECT SECRET
+    338c0a6ceb184ae68e00f060f1e40375
+
+    ENDPOINTS
+    RINKEBY
+    https://rinkeby.infura.io/v3/4279d3142bcf4543bd4e27b2fe31738c
+    wss://rinkeby.infura.io/ws/v3/4279d3142bcf4543bd4e27b2fe31738c
+
+
+
+>> npm i truffle-hdwallet-provider
+
+
+
+- Whenever we create an instance and initiate a function call / transaction, a global object is assigned to it and that is "msg" object.
+
+- It contains some properties / metadata about the contract.
+
+msg.data        "Data" field from the call or transaction that invoked the current transaction
+
+msg.gas         Amount of gas the current function invocation has available
+
+msg.sender      Address of the account that started the current function invocation
+
+msg.value       Amount of ether(in wei) that was sent along with the function invocation.
+
+
+
+
+NOTE: Return dynamic string array
+-------------------------------------------
+// SPDX-License-Identifier: GPL-3.0
+// pragma solidity ^0.4.17;
+pragma solidity >=0.7.0 <0.9.0;
+
+contract Lottery {
+    address public manager;
+
+    string[] public array;
+
+    // function Lottery() public {
+    constructor () {
+        manager = msg.sender;
+        array.push("hi");
+        
+    }
+
+    function getData() public view returns (string[] memory) {
+        return array;
+    }
+}
+
+
+NOTE: Lottery Contract
+-----------------------------------
+pragma solidity ^0.4.17;
+
+contract Lottery {
+    address public manager;
+    address[] public players;
+
+    function Lottery() public {
+        manager = msg.sender;
+        
+    }
+
+    function enter() public payable {
+        require(msg.value > 0.01 ether);
+        
+        players.push(msg.sender);
+    }
+
+    function random() private view returns(uint) {
+        // sha3(block.difficulty, now, players);
+        return uint(keccak256(block.difficulty, now, players));
+    }
+
+    function pickWinner() public restricted{
+        // require(msg.sender == manager);
+
+        uint index = random() % players.length;
+        players[index].transfer(this.balance);
+
+        players = new address[](0);
+    }
+
+    modifier restricted() {
+        require(msg.sender == manager);
+        _;
+    }
+
+    function getPlayers() public view returns(address[]) {
+        return players;
+    }
+}
+
+
+
+
+
+
+
+
+Frontend Ethereum App Architecture
+================================================
+
+                                            HTML/JS Assets                      Reading from the
+                +<----------<---------<-----------------<------      Server     block chain can 
+                |                                                               be done on the server
+        Client  |
+                |
+                |   Web3
+                +----------------------> Metamask   --------------->     Ethereum Network
+                                    Public/Private     Transaction
+                                    keys
+
+
+
+
+
+
+
+
+Solving Real World Applications
+============================================
+    - Campaign scam or fraud
+
+
+
+Campaign Contract
+----------------------------
+
+Request Struct:
+    description string  Describes why the request is being created
+    value       uint    Amount of money that the manager wants to send
+    recipient   address address that the money will be sent to
+    complete    bool    True if request has aready been processed
+    ???         ???     voting mechanism
+
+
+Storage vs Memory 
+--------------------------------
+    - Sometimes references where our contract stores data
+    - Sometimes references how our solidity variables store values
+
+ 
+    Storage: Holds data between function calls (like hard drive): like heap memory
+
+    Memory: Temporary place to store data (like RAM): function arguments: like stack memory
+
+    calldata: Like memory but can be used only in function inputs, and the data is not modifiable
+            : while passing arguments to another function, for "memory", it creates a copy, but for calldata, it doesn't resulting in saving gas
+    
+    NOTE: Example on storage and memory
+    pragma solidity ^0.4.17;
+
+    contract Numbers {
+        int[] public numbers;
+
+        function Numbers() public {
+            numbers.push(10);
+            numbers.push(20);
+
+            changeArray(numbers);
+        }
+
+        // function changeArray(int[] array) private {
+        // function changeArray(int[] memory array) private {
+        function changeArray(int[] storage array) private {
+            array[0] = 1;
+        }
+    }
+
+    - default is "memory", make a copy of the numbers and send it to changeArray function.
+
+    - "storage" keyword specifies do not make a copy of the array and send the array as such.
+
+
+
+Mapping vs Arrays
+-----------------------------
+    Key-value pairs
+
+    Array: Linear search
+    Mapping: Constant Search like Hashes of HashMap
+
+    Mappings
+    ----------------
+        - Keys are not stored
+        - Search happens through Hash Table
+        - Values are not iterable
+        - All values exist
+
+
+
+
+
+NOTE: Campaign Contract
+-------------------------------
+pragma solidity ^0.4.17;
+
+contract CampaignFactory {
+    address[] public deployedCampaigns;
+
+    function createCampaign(uint minimum) public {
+        address newCampaign = new Campaign(minimum, msg.sender);
+
+        deployedCampaigns.push(newCampaign);
+    }
+ 
+    function getDeployedCampaigns() public view returns(address[]) {
+        return deployedCampaigns;
+    }
+}
+
+	
+
+contract Campaign {
+    struct Request { // struct is a type just like string / uint
+        string description;
+        uint value;
+        address recipient;
+        bool complete;
+        uint approvalCount;
+        mapping(address => bool) approvals;
+    }
+
+    Request[] public requests;
+    address public manager;
+    uint public minimumContribution;
+    // address[] public approvers;
+    mapping(address => bool) public approvers;
+    uint public approversCount;
+
+    modifier restricted() {
+        require(msg.sender == manager);
+        _;
+    }
+    
+    function Campaign(uint minimum, address creator) public {
+        manager = creator;
+        minimumContribution = minimum;
+    }
+
+    function contribute() public payable {
+        require(msg.value > minimumContribution);
+
+        // approvers.push(msg.sender);
+        approvers[msg.sender] = true;
+        approversCount++;
+    }
+
+    function createRequest(string description, uint value, address recipient) public restricted {
+
+        Request memory newRequest = Request({
+            description: description,
+            value: value,
+            recipient: recipient,
+            complete: false,
+            approvalCount: 0
+        });
+
+        /* 
+            Alterntive syntax: pass values in order
+            Request req = Request(description, value, recipient, false);
+        */
+
+        requests.push(newRequest);
+    }
+
+    function approveRequest(uint index) public {
+        Request storage request = requests[index];
+
+        require(approvers[msg.sender]);
+        require(!request.approvals[msg.sender]);
+        
+        request.approvals[msg.sender] = true;
+        request.approvalCount++; 
+    }
+    
+    function finaliseRequest(uint index) public restricted {
+        Request storage request = requests[index];
+
+        require(request.approvalCount > (approversCount / 2));
+        require(!request.complete);
+
+        request.recipient.transfer(request.value);
+
+        request.complete = true;
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Truffle Suite
+=================================
+    https://trufflesuite.com/tutorial/index.html
+
+    - npm i -g truffle
+
+    >> truffle unbox pet-shop
+
+    Directory structure
+    The default Truffle directory structure contains the following:
+
+    - contracts/: Contains the Solidity source files for our smart contracts. There is an important contract in here called Migrations.sol, which we'll talk about later.
+    
+    - migrations/: Truffle uses a migration system to handle smart contract deployments. A migration is an additional special smart contract that keeps track of changes.
+    
+    - test/: Contains both JavaScript and Solidity tests for our smart contracts
+    
+    - truffle-config.js: Truffle configuration file
+    
+    The pet-shop Truffle Box has extra files and folders in it, but we won't worry about those just yet
+
+
+
+
+
+
+
+
+
