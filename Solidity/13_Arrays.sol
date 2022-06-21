@@ -2,15 +2,16 @@
 pragma solidity >=0.5.0;
 
 contract Arrays {
-    uint[] public age; // dynamic
-    uint[10] public score; // fixed size array with 10 size
-    uint[] public height = [1, 2, 3]; // dynamic with initial elements
-    uint[3] public length = [10, 20, 30];
+    uint256[] public age; // dynamic
+    uint256[10] public score; // fixed size array with 10 size
+    uint256[] public height = [1, 2, 3]; // dynamic with initial elements
+    uint256[3] public length = [10, 20, 30];
+    string private demo;
 
     function example() external {
         age.push(4);
 
-        uint ramAge = age[0];
+        uint256 ramAge = age[0];
         ramAge += 1;
 
         height[1] = 100; // [1, 100, 3]
@@ -19,15 +20,14 @@ contract Arrays {
 
         height.pop(); // [0, 100]
 
-
         // create array in memory
-        uint[] memory arr = new uint[](5);
+        uint256[] memory arr = new uint256[](5);
         // arr.push(1); // not available for memory
         // arr.pop();
         arr[1] = 10;
     }
 
-    function returnArray() external view returns (uint[] memory) {
+    function returnArray() external view returns (uint256[] memory) {
         return height;
     }
 }

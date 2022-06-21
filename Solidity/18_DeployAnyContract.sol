@@ -4,7 +4,7 @@ pragma solidity >=0.5.0;
 contract TestContract1 {
     address public owner = msg.sender;
 
-    function setOwner(address _owner) public{
+    function setOwner(address _owner) public {
         require(msg.sender == owner, "not owner");
         owner = _owner;
     }
@@ -12,25 +12,28 @@ contract TestContract1 {
 
 contract TestContract2 {
     address public owner = msg.sender;
-    uint public value = msg.value;
-    uint public x;
-    uint public y;
+    uint256 public value = msg.value;
+    uint256 public x;
+    uint256 public y;
 
-    constructor (uint _x, uint _y) payable {
+    constructor(uint256 _x, uint256 _y) payable {
         x = _x;
         y = _y;
     }
-
 }
 
 contract Proxy {
     event Deploy(address);
 
-    function deploy(bytes memory _code) external payable returns (address addr) {
+    function deploy(bytes memory _code)
+        external
+        payable
+        returns (address addr)
+    {
         assembly {
             // create v, p and n
-            // v = value of ether to send 
-            // t = point to the start of the code
+            // v = value of ether to send
+            // p = point to the start of the code
             // n = size of the code
 
             addr := create(callvalue(), add(_code, 0x20), mload(_code))
@@ -54,7 +57,11 @@ contract Helper {
         return bytecode;
     }
 
-    function getBytecode2(uint _x, uint _y) external pure returns (bytes memory) {
+    function getBytecode2(uint256 _x, uint256 _y)
+        external
+        pure
+        returns (bytes memory)
+    {
         bytes memory bytecode = type(TestContract2).creationCode;
         return abi.encodePacked(bytecode, abi.encode(_x, _y));
     }
@@ -63,4 +70,3 @@ contract Helper {
         return abi.encodeWithSignature("setOwner(address)", _owner);
     }
 }
-

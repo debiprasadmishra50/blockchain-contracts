@@ -23,6 +23,7 @@ contract ErrorDemo {
     }
 
     // custom Error
+    // custom error can only be used with revert
     error MyError(address caller, uint i);
     function testCustom(uint _i) public view {
         if (_i > 10) {
