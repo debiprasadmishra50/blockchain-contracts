@@ -5,7 +5,7 @@ contract Account {
     address public bank;
     address public owner;
 
-    constructor (address _owner) payable {
+    constructor(address _owner) payable {
         bank = msg.sender;
         owner = _owner;
     }

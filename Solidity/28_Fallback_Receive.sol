@@ -18,10 +18,9 @@ receive() exists?      fallback()
       /        \
   receive()   fallback()
 
- */
+*/
 contract Fallback_Receive {
-
-    event Log(string func, address sender, uint value, bytes data);
+    event Log(string func, address sender, uint256 value, bytes data);
 
     // fallback() external {}
     fallback() external payable {
@@ -32,6 +31,4 @@ contract Fallback_Receive {
     receive() external payable {
         emit Log("receive", msg.sender, msg.value, "");
     }
-
 }
-

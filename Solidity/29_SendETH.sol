@@ -10,9 +10,7 @@ pragma solidity >=0.5.0;
 */
 
 contract SendETH {
-    constructor ( ) payable {
-
-    }
+    constructor() payable {}
 
     // fallback() external payable {}
     receive() external payable {}
@@ -24,7 +22,7 @@ contract SendETH {
     function sendEtherViaSend(address payable _to) external payable {
         bool sent = _to.send(123);
 
-        require (sent, "send failed");
+        require(sent, "send failed");
     }
 
     function sendEtherViaCall(address payable _to) external payable {
@@ -33,11 +31,10 @@ contract SendETH {
         data;
         require(success, "call failed");
     }
-
 }
 
 contract EthReceiver {
-    event Log(uint amount, uint gas);
+    event Log(uint256 amount, uint256 gas);
 
     receive() external payable {
         emit Log(msg.value, gasleft());

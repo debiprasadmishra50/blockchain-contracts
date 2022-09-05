@@ -11,7 +11,7 @@ contract A {
     function bar() public pure virtual returns (string memory) {
         return "A";
     }
-    
+
     function lao() public pure returns (string memory) {
         return "A";
     }
@@ -20,6 +20,7 @@ contract A {
 }
 
 contract B is A {
+    // override: the inherited function can be overridden
     function foo() public pure override returns (string memory) {
         return "B";
     }
@@ -35,8 +36,6 @@ contract C is B {
     }
 }
 
-
-
 // Multiple Inheritance
 // order of inheritance: most base-like to derived, order is important
 // base-like: the contract that derives less no of contracts
@@ -49,7 +48,7 @@ contract X {
     function bar() public pure virtual returns (string memory) {
         return "X";
     }
-    
+
     function lao() public pure returns (string memory) {
         return "X";
     }
@@ -63,14 +62,15 @@ contract Y is X {
     function bar() public pure virtual override returns (string memory) {
         return "Y";
     }
-    
+
     function y() public pure returns (string memory) {
         return "Y";
     }
 }
 
 contract Z is X, Y {
-     function foo() public pure override(X, Y) returns (string memory) {
+    // here order doesn't matter in override()
+    function foo() public pure override(X, Y) returns (string memory) {
         return "Z";
     }
 

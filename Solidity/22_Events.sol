@@ -3,14 +3,12 @@ pragma solidity >=0.5.0;
 
 // events allow you to write data into blockchain, can not be retrieved by smart contracts
 contract Events {
-    event Log(string message, uint val);
+    event Log(string message, uint256 val);
 
     // upto 3 indexed params
-    event IndexedLog(address indexed sender, uint val);
+    event IndexedLog(address indexed sender, uint256 val);
 
-    constructor ( ) {
-
-    }
+    constructor() {}
 
     function example() external {
         emit Log("Foo", 1234);

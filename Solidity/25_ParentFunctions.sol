@@ -28,25 +28,19 @@ contract Y is X {
 
     function bar() public virtual override {
         emit Log("Y.bar");
-        
+
         // call parent func
         super.bar(); // calls all parents
     }
 }
-
 
 /* 
 
 
 
 
- */
+*/
 
-
-
-
-
- 
 contract A {
     function foo() public pure virtual returns (string memory) {
         return "A";
@@ -96,4 +90,3 @@ contract F is A, B {
         return super.foo();
     }
 }
-
