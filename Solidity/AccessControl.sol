@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+
 pragma solidity >=0.5.0;
 
 contract AccessControl {
@@ -6,17 +7,19 @@ contract AccessControl {
     event RevokeRole(bytes32 indexed role, address indexed account);
 
     // role => account => bool
+    // role is bytes32 because the roles will be hashed
     mapping(bytes32 => mapping(address => bool)) public roles;
 
-    bytes32 private constant ADMIN = keccak256(abi.encodePacked("ADMIN"));
-    bytes32 private constant USER = keccak256(abi.encodePacked("USER"));
+    bytes32 public constant ADMIN = keccak256(abi.encodePacked("ADMIN"));
+    bytes32 public constant USER = keccak256(abi.encodePacked("USER"));
 
     modifier onlyRole(bytes32 _role) {
-        require(roles[_role][msg.sender], "not authorized");
+        require(roles[_role][msg.sender], "not authorised");
         _;
     }
 
     constructor() {
+        // deployer will get the admin role
         _grantRole(ADMIN, msg.sender);
     }
 

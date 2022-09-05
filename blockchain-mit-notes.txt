@@ -1,0 +1,125 @@
+Blockchain and Bitcoin
+================================================================
+
+First Blockchain of the world designed by Stuart Haber and Storneta and a company called surety which publishes a hash every week in the New York Times. 
+
+Bitcoin - Technical Features
+---------------------------------------
+    - Cryptographic Hash Functions
+    - Time-stamped append-only logs(Blocks)
+    - Block headers and Merkle Trees
+    - Asymmetric Cryptography and Digital Signatures
+    - Addresses
+    - Consensus through proof-of-work
+    - Network of Nodes
+    - Native Currency
+    - Transaction input and output
+    - Unspent Transaction Output (UTxO)
+    - Scripting Language
+
+
+Cryptography
+--------------------------------
+    - Communications in the presence of Adversaries
+    - Computation in the presence of Adversaries
+
+Hash Function
+--------------------------------
+    - Digital Fingerprints for data
+    - General Properties
+        - Maps input X of any size to an output of fixed size - called a HASH
+        - Deterministic: Always gives the same hash for input X
+        - Efficiently computed
+
+    - Cryptographic Properties
+        - Preimage resistant (one-way) : infeasible to determine x from from the Hash(x)
+        - Collision resistant: infeasible to find and find x and y where Hash(x) = Hash(y)
+        - Avalanche Effect: You change x slightly and Hash(x) changes significantly
+        - Puzzle Friendliness: knowing Hash(x) and a part of x, it is still very hard to find the rest of x
+          
+    - Digital Signatures for data
+        - Used for
+            - names
+            - references
+            - pointers
+            - commitments
+
+        - Bitcoin Hash Functions
+            - Headers and Merkle Trees - SHA256
+            - Bitcoin Address: SHA256 and RIPEMD160
+
+
+Block Header
+-----------------------
+    - Version
+    - Previous Block Hash
+    - Merkle Root Hash
+    - TimeStamp
+    - Difficulty target
+    - Nonce
+
+
+Digital Signature Algorithms
+-------------------------------------------
+    - Generate key-value pairs: Public key(Pk) and Private key(Sk) from random numbers
+    - Signature Function: Creates Digital Signatures(Sig) from message(m) and Private Key(Sk)
+    - Verification: Verifies if a Signature(sig) is valid for a message(m) and a Public Key(Pk)
+
+
+- Elliptic Curve Digital Signature Algorithm(ECDSA)
+
+
+- How the coins get created with each block mined if block contains transaction informations.
+- How and why there is a limitation on the generation of coins like in the bitcoin.
+
+Network
+---------------------
+    - Full Nodes: Stores full blockchain and able to validate all transactions
+    - Pruning Nodes: Prune transactionsafter after validation and aging
+    - Lightweight Nodes: Simplified Payment Verification(SPV) nodes, stores blockchain headers only.
+    - Miners: Performs proof of work and create new blocks, Do not need to be a full node
+    - Mining pool operators
+    - Wallets: Store, View, Send and receive Transaction and create key pairs
+    - Mempool: Pool of unconfirmed transactions
+
+
+Alternative Consensus Protocol
+-----------------------------------------
+    - Generally Randomized or Delegated Selection of Nodes to validate next Block
+    - May have added mechanism to confirm block validators' work
+    - Randomized selection may be based upon:
+        - Proof of stake: Stake in native currency
+        - Proof of activity: Hybrid of POW and POS
+        - Proof of Burn: Validation comes with burning coins
+        - Proof of Capacity: Based on hardware space
+
+    - Delegated selection may be based upon Tiered System of Nodes
+    - Major Permissionless Blockchain Applications still use Proof of Work through.
+
+
+Transaction Format:
+-----------------------------------------
+
+    Input                             Output
+
+    Previous transaction ID         public key(addresses)
+    Index
+
+    Signature
+    ----------------------------------------------------------
+                    lock_time
+
+
+    
+Coinbase Transaction
+-----------------------------------------
+    - Reward for solving the Puzzle of proof-of-work 
+    - 
+
+
+
+
+
+
+
+
