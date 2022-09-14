@@ -4,13 +4,16 @@ Application Ecosystem
 
     - Decentralized: also known as "dApps" or "dapps"—are digital applications that run on a blockchain network of computers instead of relying on a single computer. Because dApps are decentralized, they are free from the control and interference of a single authority.
 
-- Dapps have their backend code (smart contracts) running on a decentralized network and not a centralized server. They use the Ethereum blockchain for data storage and smart contracts for their app logic. A smart contract is like a set of rules that live on-chain for all to see and run exactly according to those rules.
+- Dapps have their backend code (smart contracts) running on a decentralised network and not a centralized server. They use the Ethereum blockchain for data storage and smart contracts for their app logic. A smart contract is like a set of rules that live on-chain for all to see and run exactly according to those rules.
 
 - Dapps enable peer-to-peer(P2P) communication/trading/transaction without involvement of a third-party or a middleware.
+
+https://www.youtube.com/watch?v=HcOWNxL3Iy0
 
 https://www.youtube.com/watch?v=3xGLc-zz9cA&list=RDLV93E_GzvpMA0&index=2
 
 https://www.youtube.com/watch?v=93E_GzvpMA0
+
 
 Blockchain and Ethereum
 =======================================
