@@ -21,7 +21,7 @@ Deployment Steps
         nft address, nftId, 1
     4. approve() of NFT, 
         english_auction_contract, tokenId
-    5. switich accounts, call bid
+    5. switch accounts, call bid
     6. after time is ended, call end() in English Auction
 */
 contract EnglishAuction {
