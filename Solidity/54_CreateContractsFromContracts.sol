@@ -18,6 +18,7 @@ contract CarFactory {
         // Car car = new Car(_model, _owner);
         Car car = new Car(_model, address(this));
         cars.push(car);
+        _owner;
     }
 
     function createAndSendEther(address _owner, string memory _model)
@@ -25,5 +26,6 @@ contract CarFactory {
         payable
     {
         Car car = (new Car){value: msg.value}(_model, _owner);
+        car;
     }
 }
