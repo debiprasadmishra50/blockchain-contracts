@@ -873,3 +873,29 @@ Truffle Suite
 
 
 
+AMM (Automated Market Maker)
+==============================================
+    - It is DEX where the price of a token is determined by mathematical equation defined in the contract.
+
+    - This is wrt centralized exchange, where the price of an asset/token is determined by traders
+
+    - You can 
+        1. Add Liquidity
+        2. Swap
+        3. Remove Liquidity
+        in an AMM
+    
+    - When an user adds Liquidity, they are adding tokens into the AMM and is called a Liquidity Provider
+
+    - When a users provides liquidity the AMM mints shares back to the user.  
+    - The share represents partial ownership of the total liquidity
+
+    - A swap is when a user trades a token 
+    - User trading 10 Token B to get 10 Token A
+
+    - Remove Liquidity
+    - An user is withdrawing his tokens in exchange for his shares
+
+    - the amount of tokens being traded and the amount of tokens user gets back when the user calls remove liquidity depends on the AMM
+
+    - 
