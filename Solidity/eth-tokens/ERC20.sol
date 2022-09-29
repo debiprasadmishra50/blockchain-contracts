@@ -1,6 +1,6 @@
 // https://eips.ethereum.org/EIPS/eip-20
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.5.0 <0.8.16;
+pragma solidity >0.8.16;
 
 interface IERC20 {
     function transfer(address _to, uint256 _amount)
