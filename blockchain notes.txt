@@ -1185,19 +1185,93 @@ Questins to ask
                 T
 
 
+Constant Product Spot Price
+-----------------------------------------------
+    X = amount of token A in pool
+    Y = amount of token B in pool
+
+    P = spot price of token B in terms of token A
+        exchange rate from A to B
+      = Y / X
+    
+    From Graph: swap equation
+    ------------
+        (X + dx)(Y - dy) = K
+
+        dy          Y
+       -----  =  ---------
+        dx        X + dx 
+    as dx ----> 0
+        dy/dx -------> Y/X (slope)
+
+    => P = Y/X
+
+
+    From Calculus
+    -----------------
+    XY = K
+    => Y = f(X) = K/X
+
+    derivative of F, F'
+    => f'(X) = -K / (X^2)
+    => f'(X) = -XY / (X^2)
+    => f'(X) = -Y / X 
+        -(minus) is the slope, as Y is token out
 
 
 
 
 
 
+Vault
+============================
+    What is Vault
+        - Vault is a contract where user first deposits his token 
+        - This token can be either USDC, DAI, ETH etc...
+        - Later the user will be able to withdraw the token 
+            + profits (if the vault makes profits)
+            - loss (if the vault loses money)
+
+        - while withdrawing, the vault contract burns his shares
+
+           deposits $             Vault owner
+    User ------------->   Vault  ---------------->  Other DeFI protocols
+         <-------------          invest in other
+            mint shares          DeFI protocols
+                                 and make profit
+
+    - Deposit: how much shares to mint
+        - shares to mint is proportional to increase in balance of vault
+        a = amount to deposit
+        B = Balance of value before deposit
+        s = shares to mint
+        T = Total shares before mint
 
 
+        a + B       s + T
+        ------  =  -------
+          B           T
 
+    => (a + B)T = (s + T)B
+    => aT + BT = sB + TB
+    => aT = sB
 
+    => s = aT / B
 
+    - Withdraw: how much amount to withdraw
+        a = amount to withdraw
+        B = Balance of value before withdraw
+        s = shares to burn
+        T = Total shares before burn
 
+        B - a       T - s
+        ------  =  -------
+          B           T
 
+    => (B - a)T = (T - s)B
+    => BT - aT = TB - sB
+
+    => a = sB / T
 
 
 
