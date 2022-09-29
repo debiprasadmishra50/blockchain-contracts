@@ -130,7 +130,7 @@ contract CSAMM {
         /* transfer token0 and token1 into this contract */
         token0.transferFrom(msg.sender, address(this), _amount0);
         token1.transferFrom(msg.sender, address(this), _amount1);
-        /* get the current balance  */
+        /* get the current token balance  */
         uint256 bal0 = token0.balanceOf(address(this));
         uint256 bal1 = token1.balanceOf(address(this));
         /* get the actual amount of tokens that came in */
@@ -174,7 +174,7 @@ contract CSAMM {
 
             a / L = s / T
 
-            a = L * s / T
+            a = (L * s) / T
               = (reserve0 + reserve1) * s / T
         */
         d0 = (reserve0 * _shares) / totalSupply;

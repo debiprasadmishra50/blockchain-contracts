@@ -898,4 +898,310 @@ AMM (Automated Market Maker)
 
     - the amount of tokens being traded and the amount of tokens user gets back when the user calls remove liquidity depends on the AMM
 
-    - 
+Questins to ask
+    - Why this AMM is called CSAMM
+    - How many tokens does a user get back in a trade
+    - How many shares are minted when a liquidity provider adds liquidity
+    - How many tokens does a liquidity provider get back when the liquidity provider removes liquidity.
+
+=> CSAMM : Constant Sum Automated Market Maker
+---------------------------------------------------------
+    price of tokens are determined by equation:
+        X + Y = K
+
+        X = amount of token A in the AMM
+        Y = amount of token B in the AMM
+
+        upon added we get a constant called K
+
+    - when a user trades in CSAMM, the cconstant K must remain same regarless of X and Y changes.
+    
+    example: 
+        User sells token A and buy Token B
+
+        dx = amount of token A coming in 
+        dy = amount of token B going out
+
+        B
+        |
+        |\
+        | \    X + Y = K
+        |  \
+        |   \
+        |    \
+        |     \
+        |      \  
+       -|-------\------------------------- A
+
+- Swap: How many tokens to return in a trade
+    - Trade from Token A to Token B (sell A to get B)
+    - seller puts A token into AMM to get B in return
+
+    Before the trade            After the trade
+    X + Y = K                   X + dx + Y - dy = K
+
+                            => X + dx + Y - dy = X + Y
+                            => dx + dy = 0
+                            => dx = dy
+
+                    Amount of token in = Amount of token out
+
+    example:
+        Token in = user Selling = Token A = 100
+        How many B will the user get in return
+
+        dx = 100;
+        dy = dx = 100;
+        Token out = User Receiving = Token B = 100
+
+- Add Liquidity - How many shares to mint
+    - Increase in liquidity is proportional to Increase in total shares
+
+    a = Amount in
+    L = Total liquidity before new liquidity is added
+    s = Amount of shares to mint
+    T = Total shares before mint
+
+        L + a     T + s
+    =>  ------ = -------
+          L         T
+
+    =>  s = a*T / L
+
+    a = dx + dy
+    L = X + Y
+
+            (dx + dy) * T
+     => s = ----------------
+                X + Y 
+
+- Remove Liquidity - How many tokens to withdraw
+    - withdraw tokens proportional to shares
+
+    a = amount out
+    L = Total Liquidity
+    s = amount of shares to burn
+    T = Total shares
+
+        a       s
+    =>   ---  =  ---
+        L       T
+
+    => a = (L * s) / T
+
+                (X + Y) * s
+    => dx + dy = --------------
+                    L
+
+
+    => dx = Xs / T
+    => dy = Ys / T
+
+
+
+=> CPAMM : Constant Product Automated Market Maker
+---------------------------------------------------------
+    - Price of tokens are determined by the equation
+        XY = K
+
+        X = amount of Token A in the AMM
+        Y = Amount of Token B in the AMM
+
+    example:
+        Sell token A and buy Token B
+        dx = Amount of Token A in
+        dy = Amount of Token B out
+
+        Before the trade: XY = K
+        After trade = (X + dx)(Y-dy) = K
+
+    => (X + dx)(Y - dy) = XY
+
+
+- Swap -  How many token to return in a trade
+            Y * dx
+    dy = ------------- 
+            X + dx
+
+            X * dy
+    dx = -------------
+            Y + dy
+
+    - swap from token A to Token B
+    dx = amount of token A in
+    dy = amount of token B out
+
+    Before swap 
+        XY = K
+    
+    After Swap
+        (X + dx)(Y-dy) = K
+    
+    => (X + dx)(Y - dy) = XY
+    divide above equation by (X + dx)
+                   K
+    => dy = Y - --------
+                 X + dx
+
+    replace K with XY
+                   XY
+    => dy = Y - --------
+                 X + dx
+
+             YX + Ydx - XY
+    => dy = ----------------
+                 X + dx
+    
+                  Ydx 
+    => dy = ----------------
+                 X + dx
+
+
+- Add Liquidity - How many shares to mint
+          dx        dy
+    s = ------ T = ----- T
+          X         Y
+
+    Before adding
+        XY = K 
+    After adding
+        (X + dx)(Y + dy) = K'
+
+    then, 
+        K <= K'
+
+    constraint is
+        - No price change before and after adding liquidity
+
+     X     X + dx
+    --- = ---------
+     Y     Y + dy
+
+    What is dy given dx?         What is dx given dy?
+        - Find dy                   - find dx
+     X     X + dx
+    --- = ---------
+     Y     Y + dy
+
+    => X(Y + dy) = Y(X + dx)     
+    => XY + Xdy = XY + Ydx
+    => Xdy = Ydx
+    => X/Y = dx/dy
+
+            Ydx                        Xdy
+    => dy = ---               => dx = -----
+             X                          Y
+
+   
+    => dx/dy = X/Y
+
+
+- How many shares to mint
+    - Increase in liquidity is proportional to Increase in shares
+
+    L0 = total liquidity before adding
+    L1 = total liquidity After adding
+    T = total shares before
+    s = shares to mint
+
+        L1     T + s
+    =>  ---- = --------
+        L0       T
+
+        L1 * T   
+    =>  ------ = T + s
+          L0       
+
+            L1 * T
+    => s =  ------- - T
+              L0
+
+            L1 - L0
+    => s =  -------- * T
+              L0
+
+
+    How to measure total liquidity from X and Y
+        f(X,Y) = total liquidity
+
+        f(X,Y) = sqrt(X.Y)
+
+    motivation:
+        - XY = K
+        after adding liquidity increases K
+        (X + dx)(Y + dy) = K'
+
+        f(X,Y) shoulb be linear
+        f(X,Y) <= c * max(X, Y)
+
+    L0 = sqrt(X.Y)
+
+         2|-------------------
+    L1 = \| (X + dx) (Y + dy)
+
+        L1 - L0     dx      dy
+    =>  -------- =  ---  = ----
+           L0        X       Y
+
+            dx       dy
+    => s = ---- T = ----- T
+            X         Y
+
+
+- Remove liquidity ; how many tokens to withdraw
+               s
+    => dx = X ---
+               T
+               s
+    => dy = Y ---
+               T
+
+    - withdraw tokens proportional to shares
+
+    a = amount to withdraw = f(dx, dy) = sqrt(dx . dy)
+    L = total liquidity = f(X,Y) = sqrt(X.Y)
+    s = Amount of shares to burn
+    T = total shares
+
+    => a/L = s/T
+    => a = L * (s/T)
+        |----------      |------  s
+    => \| dx . dy     = \| X.Y   ---  
+                                  T
+
+    => Find dx
+        |----------         |------  s
+    =>  |  dx . Ydx      = \| X.Y   ---  
+        |       ---                  T
+       \|        X
+
+
+         |---------      |-------  s
+    => dx|  Y / X     = \| X.Y    ---
+        \|                         T
+
+                s
+    => dx  = X ---
+                T
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
