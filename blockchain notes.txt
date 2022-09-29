@@ -872,6 +872,15 @@ Truffle Suite
 
 
 
+DeFI
+==================
+    Pillars of DeFI
+        - StableCoin
+        - Lending and Borrowing
+        - Decentralized Exchanges
+        - Insurance
+        - Margin Trading
+
 
 AMM (Automated Market Maker)
 ==============================================
@@ -1276,6 +1285,26 @@ Vault
 
 
 
+Tokens in Blockchain
+-----------------------------------
+https://www.youtube.com/watch?v=422HORNUfkU
+https://www.youtube.com/watch?v=4dkl5O9LOKg
+
+    - Platform Token
+        - created to support a DAPP on blockchain, uniswap, 
+    
+    - Security Tokens
+        - minted to represent ownership of another asset
+
+    - Transactional Tokens
+        - faster way to transfer money
+
+    - Utility Tokens
+        - Value tied to their ownership
+        - Brave Token (BAT: Basic Attention Token)
+    
+    - Governance Token
+        - allow users to vote on certain things
 
 
-
+    
