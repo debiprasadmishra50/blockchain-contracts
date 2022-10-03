@@ -993,7 +993,7 @@ Questins to ask
     T = Total shares
 
         a       s
-    =>   ---  =  ---
+    => ---  =  ---
         L       T
 
     => a = (L * s) / T
@@ -1114,7 +1114,7 @@ Questins to ask
     s = shares to mint
 
         L1     T + s
-    =>  ---- = --------
+    => ---- = --------
         L0       T
 
         L1 * T   
@@ -1308,3 +1308,334 @@ https://www.youtube.com/watch?v=4dkl5O9LOKg
 
 
     
+
+Syntetix Staking Reward
+=========================================
+    - Earn rewards for Staking
+    - Owner can set the rewards and duration
+        - amount to pay
+        - for the duration they will be paying
+    
+    - then owner sends the reward token into the staking reward contract
+    - User now can stake their token and start earning rewards
+    
+    let's say user stakes 200 tokens into the staking reward contract
+    before the user, many other users also have staked their tokens
+    Lets say there are total 2000 tokens staked inside the contract
+    1 week later, user withdraws all the 200 tokens that he staked
+
+    rewards = 
+
+        (200/2000) * (1000/week * 1 week)
+         = (1/10) * (1000)
+         = 100 rewards
+
+    Math
+    --------------
+    r(u,k,n) = rewards(r) earned by user u from k to n seconds
+
+    Si = amount staked by user u at time = i
+    Ti = total staked by all users at time i (Assume Ti > 0)
+    R = reward rate per second (total rewards / duration)
+
+        n - 1
+        _____
+    r = \       (Si / Ti) * R
+        /____
+         i = k
+
+
+    Furthermore, when
+        Si = constant S for time k ot n-1
+
+                 n - 1
+                 ______
+    r(u,k,n) = S \      R / Ti
+                 /_____
+                 i = k
+             +––––––––                       ––––––––+
+             |   n - 1               k - 1           |
+             |   ______             _______          |
+    => S  *  |   \      R / Ti  -   \       R / Ti   |
+             |   /_____             /______          |
+             |   i = 0              i = 0            |
+             |________                       ________|
+
+
+    => S * (reward per token - user reward per token paid)
+
+    Rewrite the equation
+        Define reward per token at time j
+        r0 = 0
+
+            j - 1
+            –––––––
+       rj = \      R / Ti     <---- 0 if Ti = 0 
+            /______
+            i = 0
+
+        When Ti = T, at time i for jo <= i < j
+          +––––                   –––––+
+          |                R           |
+          |  rj = r(jo) + --- (j - jo) |
+          |                T           |
+          +––––                   –––––+  
+
+    proof:
+
+             j - 1
+            –––––––
+       rj = \      R / Ti     <---- 0 if Ti = 0 
+            /______
+             i = 0
+
+
+        +––––––––                       ––––––––+
+        |   j0 - 1              j - 1           |
+        |   ______             _______          |
+    =>  |   \      R / Ti  -   \       R / Ti   |
+        |   /_____             /______          |
+        |   i = 0              i = j0           |
+        |________                       ________|
+         Ti is constant T, for jo <= i < j
+
+                        j - 1
+                    R   ––––
+        = r(j0) +  ---  \    1
+                    T   /___
+                        i = j0
+
+                              n              
+                            ––––––
+                        =>  \       1   =  n - k + 1
+                            /_____
+                             i = k
+
+        +––––                   –––––+
+        |                R           |
+    =>  |  rj = r(jo) + --- (j - jo) |
+        |                T           |
+        +––––                   –––––+ 
+
+ 
+
+––––––
+\
+/_____
+
+
+
+    Examples
+    --------------
+        n - 1
+        _____
+    r = \       (Si / Ti) * R
+        /____
+         i = k
+    Si = amount staked by user u at time = i
+    Ti = total staked by all users at time i (Assume Ti > 0)
+    R = reward rate per second (total rewards / duration)
+
+    1. Alice stakes 100 token for 3 seconds
+    How many rewards earned by Alice?
+
+    at 3-4 sec   at 4-5 sec     at 5-6 sec
+    100          100            100
+    ---- R   +   ---- R    +    ---- R
+    100          100            100
+
+    => 3R (amount of rewards Alice will receive for 3 seconds)
+
+
+    2. Alice stakes 100 for 4 seconds
+       Bob stakes 200 for 5 seconds
+        How many rewards are earned by Alice?
+
+        3 Alice stakes 100
+        5 Bob stakes 200
+        7 Alice withdraws 100
+        10 Bob w ithdraws 200
+
+  at 3-4 sec   at 4-5 sec  at 5-6 sec  at 6-7 sec
+    100         100        100          100
+    --- R    +  --- R    + --- R     +  --- R 
+    100         100        300          100
+
+    => R + R + (1/3)R + (1/3)R
+    => 2R + (2/3)R
+    
+    => (8/3) R
+
+
+
+             +––––––––                       ––––––––+
+             |   n - 1               k - 1           |
+             |   ______             _______          |
+    => S  *  |   \      R / Ti  -   \       R / Ti   |
+             |   /_____             /______          |
+             |   i = 0              i = 0            |
+             |________                       ________|
+
+        +––––                   –––––+
+        |                R           |
+    =>  |  rj = r(jo) + --- (j - jo) |
+        |                T           |
+        +––––                   –––––+ 
+ 
+    3. secs 3: Alice stakes 100
+            5: Bob stakes 200
+            6: Carol stakes 100
+            9: Alice withdraws 100
+           10: Carol stakes 100
+           11: Bob withdraws 200
+           13: Carol withdraws 200
+        
+        User rewards per token
+        --------------------------
+        Alice: r3, r9
+        Bob: r5, r11
+        Carol: r6, r10, r13
+
+    at 0 sec: r0 = 0                               
+    at 3 sec: r(3) = r0 + 0 * (3 - 0) (as T = 0)   
+    at 5 sec: r(5) = r3 + (R/100) * (5-3) 
+                   = 0  + (2R / 100)
+                   = 2R / 100
+    at 6 sec: r(6) = r5 + (R/300) * (6-5)
+                   = 2R     1R
+                     --- + ----
+                     100    300
+
+    at 9 sec: r(9) = r6 + (R/400) * (9-6)
+                     2R     1R     3R
+                  =  --- + ---- + ----
+                     100    300    400
+
+    Alice:
+             +––––––––                       ––––––––+
+             |   n - 1               k - 1           |
+             |   ______             _______          |
+    => S  *  |   \      R / Ti  -   \       R / Ti   |
+             |   /_____             /______          |
+             |   i = 0              i = 0            |
+             |________                       ________|
+
+        staked at 3 sec and withdraw at 9 sec
+
+        Alice: 100 (staked) * (r9 - r3)
+                    +––––               –––––+
+            => 100 *|  2R     1R     3R      |
+                    |  --- + ---- + ---- - 0 |
+                    |  100    300    400     |
+                    +____               _____|    
+
+            => 
+
+    at 10 sec: r(10) = r9 + (R/300) * (10-9)
+                        2R     1R     3R     R
+                     =  --- + ---- + ---- + ----
+                        100    300    400    300
+
+        Carol: 100 (staked) * (r10 - r6)
+                     +–––––––                               –––––––+
+            => 100 * | 2R     1R     3R     R           2R     1R  |
+                     | --- + ---- + ---- + ----    -   ---- - ---- |
+                     | 100    300    400    300         100    300 |
+                     |_______                               _______|
+
+                      +–––     –––––+
+            =>  100 * |  3R     1R  |
+                      | ---- +  --- |
+                      |  400    300 |
+                      |___      ____|
+    
+    at 11 sec: r(11) = r10 + (R/400) * (11 - 10)
+                        2R     1R     3R     R      R
+                     =  --- + ---- + ---- + ---- + ---
+                        100    300    400    300   400
+
+        Bob: 200 (staked) * (r11 - r5)
+                  +––––                             –––––––+
+            200 * |  2R     1R     3R     R      R    2R   |
+                  |  --- + ---- + ---- + ---- + --- - ---  |
+                  |  100    300    400    300   400   100  |
+                  |____                             _______|
+
+            =     +––––                –––––––+
+            200 * |  1R     3R     R      R   |
+                  | ---- + ---- + ---- + ---  |
+                  |  300    400    300   400  |
+                  |____                _______|
+
+    at 13 sec: r(13) = r11 + (R/200) * (13-11)
+                        2R     1R     3R     R      R    2R
+                     =  --- + ---- + ---- + ---- + --- + --- 
+                        100    300    400    300   400   200
+
+        Carol: 200 (staked) * (r13 - r10)
+
+               +––––––
+               |  2R     1R     3R     1R    1R    2R
+         200 * |  --- + ---- + ---- + ---- + --- + --- 
+               |  100    300    400    300   400   200   
+               |______                      ––––––+
+                        2R     1R     3R     R    |
+                     -  --- - ---- - ---- - ----  |
+                        100    300    400    300  |
+                                            ______|
+
+                  +–––       ––––+
+          = 200 * | 1R     2R    |
+                  |---- + -----  |
+                  | 400    200   |
+                  |____      ____|
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
