@@ -1591,7 +1591,28 @@ Syntetix Staking Reward
                   |____      ____|
 
 
+    Algorithm
+    ----------------------
+    On Stake or Withdraw
+        - Calculate current reward per token
+            r += (R/totalSupply) * (curTime - lastUpdateTime)
 
+        - Calculate amount of rewards earned by user
+            rewards[user] += balanceOf[user] * (r - userRewardPerTokenPaid[user])
+
+        - Update the user reward per token paid
+            userRewardPerTokenPaid[user] = r
+
+        - update last token update time / the last time the reward was calculated
+            lastUpdateTime = curTime
+
+        - update the amount of tokens staked by user
+            balanceOf[user] +/- = amount  (+ on stakinf, - on withdrawing)
+
+        - update totalSupply
+            totalSupply +/- = amount
+
+        
 
 
 
