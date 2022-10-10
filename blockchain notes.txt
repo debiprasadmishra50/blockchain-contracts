@@ -1699,6 +1699,15 @@ Comptroller |
             
 
 
+    Liquidation
+    ------------------------------
+        What is it?
+            - on compound when you borrow more than what you supplied, then you are subjected to Liquidation
+
+            - it means that someone else can repay a portion of the token that you borrowed and in return that person receives the token that you suppplied at a discount
+
+            - to create a situation where the burrowed amount is greater than the amount that was supplied  
+
 
 
 
