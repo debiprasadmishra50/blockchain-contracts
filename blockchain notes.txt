@@ -1616,15 +1616,87 @@ Syntetix Staking Reward
 
 
 
+Compound Finance
+==================================
+Borrowers and Lenders, just like a bank
+    Borrowers: take money from the protocol
+    Lenders: provide assets to be lent by the borrowers
 
 
+            +––––––––> cToken DAI
+            |
+            |
+            +–––––––––> cToken BAT
+            |
+Comptroller |
+            |.... etc
+            |
+            |
 
 
+    - we will have to interactwith one of cToken, when we want to lend or borrow token
 
+    - when user wants to borrow a token, Comptroller, will check that whether user has enough collateral across Ctokens.
 
+    - in most cases, cToken will ask the Comptroller to perform the operations, except a few cases where you will have to interact with it directly
 
+    - Comproller contains the primar logic of the compound finance
 
+    Borrowing
+    ---------------
+        1. provide a collateral to compound
+                        dai tokens
+                  +–––––––––––––––––––>
+        Borrower  |                     cDAI (contract)
+                  <––––––––––––––––––––
+                        cDAI tokens
+            - if you want to use DAI as a collateral then we have to send some DAI to cToken DAI and we call it cToken cDAI
 
+            - now in exchange cDAI contract will give us another token is called cDAI, 
+
+            - cDAI represents the DAI token we sent to compound, and at any time we can redeem the cDAI to get the real DAI token that we sent
+            
+        2. enterMarket()
+                        enterMarket()
+                  +–––––––––––––––––––>
+        Borrower  |                     comptroller
+                  
+                      
+            - you say that you are willing to use a certain set of token as collateral for borrowing other tokens
+
+        3. Borrow token
+                        borrow()
+                  +–––––––––––––––––––>
+        Borrower  |                     cBAT (contract)
+                  <––––––––––––––––––––
+                        bat tokens
+
+            - call the borrow() on cBAT smart contract
+        
+        4. repay Token
+                        bat tokens
+                  +–––––––––––––––––––>
+        Borrower  |                     cBat (contract)
+
+            - there is no duration for the loan
+            - you can pay back the loan whenever you want
+            - the longer the loan the higher the interest
+        
+        5. Repay Token - redeem()
+
+                        cdai tokens
+                  +–––––––––––––––––––>
+        Borrower  |                     cDAI (contract)
+                  <––––––––––––––––––––
+                        DAI tokens
+
+            - getback the collateral DAI tokens that you've put in the compound
+            - you will redeem() cDAI tokens, it will be sent to cDAI contract and it will return the DAI token that you've kept
+
+            -  you will get something extra as you'll have earned some interest during this time
+
+            - you can keep this amount without the redeem and can keep earning interest 
+            
 
 
 
