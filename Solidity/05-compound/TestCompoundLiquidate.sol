@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "./interfaces/compound.sol";
+import "./interfaces/Compound.sol";
 
 // supply
 // borrow max
@@ -10,6 +10,7 @@ import "./interfaces/compound.sol";
 // liquidate
 
 contract TestCompoundLiquidate {
+    // MAINNET ADDRESS
     Comptroller public comptroller =
         Comptroller(0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B);
 
@@ -87,7 +88,89 @@ contract TestCompoundLiquidate {
 }
 
 contract CompoundLiquidator {
-    // close factor
-    // liquidation incentive
-    // liquidate
+    Comptroller public comptroller =
+        Comptroller(0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B);
+
+    IERC20 public tokenBorrow;
+    CErc20 public cTokenBorrow;
+
+    constructor(address _tokenBorrow, address _cTokenBorrow) {
+        tokenBorrow = IERC20(_tokenBorrow);
+        cTokenBorrow = CErc20(_cTokenBorrow);
+    }
+
+    /* 
+        close factor
+            - max percentage of the borrow token that can be repaid
+            - if a person has borrowed 100 DAI and the close factor is 50%, we can repay upto 50% of 100 DAI that was borrowed
+
+        liquidation incentive
+            - when we call liquidate, we repay a portion of the token that was borrowed by another account
+            - in return you are rewarded with a portion of the token that was supplied as collateral
+            - you'll receive the collateral at a discount
+            - it's called liquidation incentive
+
+        liquidate
+    */
+    // CLOSE FACTOR
+    function getCloseFactor() external view returns (uint256) {
+        // scaled up by 10^18,
+        // to get percentage, divide the amount by 10^18
+        return comptroller.closeFactorMantissa();
+    }
+
+    // LIQUIDATION INCENTIVE
+    function getLiquidationIncentive() external view returns (uint256) {
+        return comptroller.liquidationIncentiveMantissa();
+    }
+
+    // get amount of collateral to be liquidated
+    function getAmountToBeLiquidated(
+        address _cTokenBorrowed,
+        address _cTokenCollateral,
+        uint256 _actualRepayAmount
+    ) external view returns (uint256) {
+        /* 
+          Get exchange rate and calculate the number of collateral tokens to seize:
+
+          seizeAmount = actualRepayAmount * liquidationIncentive * priceBorrowed / priceCollateral
+
+          seizeTokens = seizeAmount / exchangeRate
+            = actualRepayAmount * (liquidationIncentive * priceBorrowed) / (priceCollateral * exchangeRate)
+
+        */
+
+        (uint256 _error, uint256 cTokenCollateralAmount) = comptroller
+            .liquidateCalculateSeizeTokens(
+                _cTokenBorrowed,
+                _cTokenCollateral,
+                _actualRepayAmount
+            );
+
+        require(_error == 0, "error");
+
+        return cTokenCollateralAmount;
+    }
+
+    // LIQUIDATE
+    // borrower address, amount that we will repay, cTokenCollateral we will receive in return for liquidating
+    function liquidate(
+        address _borrower,
+        uint256 _repayAmount,
+        address _cTokenCollateral
+    ) external {
+        // transfer the _repayAmount from sender to this contract
+        tokenBorrow.transferFrom(msg.sender, address(this), _repayAmount);
+        // approve cTokenBorrow to be able to spend _repayAmount
+        tokenBorrow.approve(address(cTokenBorrow), _repayAmount);
+
+        require(
+            cTokenBorrow.liquidateBorrow(
+                _borrower,
+                _repayAmount,
+                CErc20(_cTokenCollateral)
+            ) == 0,
+            "liquidate failed"
+        );
+    }
 }

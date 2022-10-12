@@ -6,7 +6,7 @@ pragma solidity ^0.8.0;
 // burrow
 // repay
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "./interfaces/compound.sol";
+import "./interfaces/Compound.sol";
 
 contract TestCompoundErc20 {
     IERC20 public token; // token for lending
@@ -62,6 +62,7 @@ contract TestCompoundErc20 {
         require(cToken.redeem(_cTokenAmount) == 0, "redeem failed");
     }
 
+    // MAINNET ADDRESS
     /// borrow and repay ///
     Comptroller public comptroller =
         Comptroller(0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B);
