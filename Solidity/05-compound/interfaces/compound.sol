@@ -23,6 +23,12 @@ interface CErc20 {
     function borrowRatePerblock() external view returns (uint256);
 
     function repayBorrow(uint256) external returns (uint256);
+
+    function liquidateBorrow(
+        address borrower,
+        uint256 repayAmount,
+        CErc20 cTokenCollateral
+    ) external returns (uint256);
 }
 
 interface CEth {
@@ -47,6 +53,12 @@ interface CEth {
     function borrowRatePerblock() external view returns (uint256);
 
     function repayBorrow(uint256) external returns (uint256);
+
+    function liquidateBorrow(
+        address borrower,
+        uint256 repayAmount,
+        CEth cTokenCollateral
+    ) external returns (uint256);
 }
 
 interface Comptroller {
