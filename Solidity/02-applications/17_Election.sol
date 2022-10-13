@@ -13,7 +13,7 @@ contract Election {
 
     uint256 public candidatesCount;
 
-    constructor() public {
+    constructor() {
         _addCandidate("Candidate 1");
         _addCandidate("Candidate 2");
     }

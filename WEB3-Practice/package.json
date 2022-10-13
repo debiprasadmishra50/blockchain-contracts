@@ -1,10 +1,18 @@
 {
-  "name": "WEB3-Practice",
+  "name": "web3-ractice",
+  "displayName": "Web3-Practice",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "author": {
     "name": "Debi Prasad Mishra",
     "url": "https://www.debiprasadmishra.net"
+  },
+  "scripts": {
+    "start": "ts-node src/app.ts"
+  },
+  "dependencies": {
+    "solc": "^0.8.17",
+    "web3": "^1.8.0"
   }
 }
