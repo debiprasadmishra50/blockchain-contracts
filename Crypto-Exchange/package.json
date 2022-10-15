@@ -2,7 +2,8 @@
   "name": "eth-swap",
   "version": "0.1.0",
   "description": "ERC-20 Crypto Exchange",
-  "author": "gregory@dappuniversity.com",
+  "author": "debiprasadmishra50@gmail.com",
+  "homepage": "https://debiprasadmishra50.github.io",
   "dependencies": {
     "babel-polyfill": "6.26.0",
     "babel-preset-env": "1.7.0",
@@ -25,7 +26,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -37,6 +40,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "gh-pages": "^4.0.0",
     "identicon.js": "2.3.3"
   }
 }
