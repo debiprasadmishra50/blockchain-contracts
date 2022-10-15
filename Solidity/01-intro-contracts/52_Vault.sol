@@ -55,7 +55,7 @@ interface IERC20 {
     3. approve() the Vault to spend 1000 on your behalf
     4. deposit() 1000 in Vault
     5. mint 1000 again
-    6. transfer() 1000 to valut
+    6. transfer() 1000 to vault
     7. continue checking balanceOf
     8. withdraw 1000
     9. check the balanceOf user1 in erc20, must be 2000
