@@ -8,6 +8,35 @@ type ABI = {
   contractName: { abi: []; devdoc: {}; evm: {}; ewasm: {}; metadata: ""; storageLayout: {}; userdoc: {} };
 };
 
+type Unit =
+  | "noether"
+  | "wei"
+  | "kwei"
+  | "Kwei"
+  | "babbage"
+  | "femtoether"
+  | "mwei"
+  | "Mwei"
+  | "lovelace"
+  | "picoether"
+  | "gwei"
+  | "Gwei"
+  | "shannon"
+  | "nanoether"
+  | "nano"
+  | "szabo"
+  | "microether"
+  | "micro"
+  | "finney"
+  | "milliether"
+  | "milli"
+  | "ether"
+  | "kether"
+  | "grand"
+  | "mether"
+  | "gether"
+  | "tether";
+
 export function initWeb3(uri?: string) {
   const URI = uri || "http://127.0.0.1:8545";
   const provider = new Web3.providers.HttpProvider(URI);
@@ -71,4 +100,12 @@ export function getContractInstance(contractABI: Array<any>, contractAddress: st
   if (!web3) initWeb3();
 
   return new web3.eth.Contract(contractABI, contractAddress);
+}
+
+export function fromWei(value: string, unit?: Unit) {
+  return web3.utils.fromWei(value, unit ? unit : "ether");
+}
+
+export function toWei(value: string, unit?: Unit) {
+  return web3.utils.toWei(value, unit ? unit : "wei");
 }

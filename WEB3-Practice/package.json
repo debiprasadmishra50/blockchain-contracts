@@ -9,9 +9,11 @@
     "url": "https://www.debiprasadmishra.net"
   },
   "scripts": {
-    "start": "ts-node src/app.ts"
+    "start": "ts-node src/app.ts",
+    "start:watch": "nodemon src/app.ts"
   },
   "dependencies": {
+    "dotenv": "^16.0.3",
     "solc": "^0.8.17",
     "web3": "^1.8.0"
   }
