@@ -12,44 +12,22 @@ const explorerURI = "https://goerli.etherscan.io/tx";
 web3 = lib.initWeb3(`https://goerli.infura.io/v3/${process.env.INFURA_KEY}`);
 web3.eth.accounts.wallet.add(privateKey);
 
-const DAI_TOKEN = "0xf2edF1c091f683E3fb452497d9a98A49cBA84666";
-import { DAI as DAI_ABI } from "../abis/DAI.json";
-const daiContract = lib.getContractInstance(DAI_ABI, DAI_TOKEN);
+const factoryAddress = "0x6Ce570d02D73d4c384b46135E87f8C592A8c86dA";
+import { factoryABI, exchangeABI, tokenABI } from "../abis/UniSwapV1.json";
+import { AbiItem } from "web3-utils";
 
 const app = async () => {
-  const latestBlockNumber = await web3.eth.getBlockNumber();
-  console.log(latestBlockNumber);
+  const factoryContract = new web3.eth.Contract(factoryABI as AbiItem[], factoryAddress);
 
-  // check ether balance
-  let bal = await web3.eth.getBalance(account);
-  console.log(`[+] ${account} has`, lib.fromWei(bal), "ether");
+  let tokenAddress = "0xdF355d0e1F1eA13f29fe6901391D618B34d45555";
+  const exchangeAddress = await factoryContract.methods.getExchange(tokenAddress).call();
+  console.log(exchangeAddress); // 0x0000000000000000000000000000000000000000 means there is not exchange assigned
 
-  // check DAI balance
-  let daiBalance = await daiContract.methods.balanceOf(account).call();
-  console.log(`[+] ${account} has`, daiBalance, "DAI");
+  const exchangeContract = new web3.eth.Contract(exchangeABI as AbiItem[], exchangeAddress);
 
-  const to = "0x62af1bf552347b7baac5ce78790e75e19f2d77a0";
-  const amount = lib.toWei("1");
-  try {
-    const result = await daiContract.methods.transfer(to, amount).send({
-      from: account,
-      gasLimit: 6000000,
-      gasPrice: lib.toWei("1", "Gwei"),
-    });
-    console.log("[+] successful transaction:", `${explorerURI}/${result.transactionHash}`);
-  } catch (err) {
-    console.log(err);
-  }
-
-  // check ether balance
-  bal = await web3.eth.getBalance(account);
-  console.log(`[+] ${account} has`, lib.fromWei(bal), "ether");
-
-  // check DAI balance
-  daiBalance = await daiContract.methods.balanceOf(account).call();
-  console.log(`[+] ${account} has`, daiBalance, "DAI");
+  tokenAddress = factoryContract.methods.getToken(exchangeAddress);
 };
 // freshdesk
 // e-shops
 
-app();
+// app();
