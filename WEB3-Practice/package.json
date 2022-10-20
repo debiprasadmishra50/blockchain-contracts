@@ -13,7 +13,13 @@
     "start:watch": "nodemon src/app.ts"
   },
   "dependencies": {
+    "@ethersproject/contracts": "^5.7.0",
+    "@ethersproject/providers": "^5.7.1",
+    "@ethersproject/solidity": "^5.7.0",
+    "@openzeppelin/contracts": "^4.7.3",
+    "@uniswap/sdk": "^3.0.3",
     "dotenv": "^16.0.3",
+    "ethers": "^5.7.1",
     "solc": "^0.8.17",
     "web3": "^1.8.0"
   }
