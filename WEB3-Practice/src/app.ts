@@ -244,6 +244,112 @@ Model of Uniswap
     - otherwise if you trade directly with the pair, you have to take care of the yourself of wrapping your ETH into a WETH token first. 
 
     
+  Pricing in UniswapV2
+  ===============================
+      - It uses CPAMM(Constant Product Automated market Maker)
+
+      => X * Y = K
+
+      Swapping X with Y means you will provide X to get Y
+
+      dx = amount of X token provided
+      dy = amount of Y token to be received
+
+      as you provide dx, X token will increase in liquidity
+      as you receive dy, Y token will decrease in liquidity
+
+    After Swap  
+      => (X + dx)(Y - dy) = K
+
+                   K
+      => dy = Y - --------
+                  X + dx
+
+      replace K with XY
+                    XY
+      => dy = Y - --------
+                  X + dx
+
+              YX + Ydx - XY
+      => dy = ----------------
+                  X + dx
+      
+                    Ydx 
+      => dy = ----------------
+                  X + dx
+
+    Uniswap hasa trading fee of 0.3%
+
+              Y * 0.997 * dx 
+      => dy = ----------------
+                  X + dx
+
     
+    How much can I add to Liquidity Pool
+    -------------------------------------------
+      -  https://www.youtube.com/watch?v=YfLmaCaVYn8&list=PLO5VPQH6OWdX-Rh7RonjZhOd9pb9zOnHW&index=4
+
+    Optimal One-sided supply
+    ------------------------------
+      - I have 1000DAI and 0 ETH and I want to become a LP for uniswap
+
+      - Sell half of the DAI, and get ETH in return
+
+      - now send both DAI and ETH into Uniswap to become LP
+
+      - IT took all DAI but not all ETH to maintain the ratio, it returned the extra ETH 
+
+      - not I have some tokens which are un-utilised, here ETH
+      - Ideally I would like to utilise all of my tokens for Liquidity
+
+      - Then we can find a optimal amount to swap so that we can minimze the amount of tokens that are un-utilized
+
+      - We want optimal amount of DAI to swap so that after adding Liquidity the amount of ETH left at our hand is as low as possible
+
+      Optimal amount to swap:
+      -----------------------------
+        A = amount of token A in Uniswap = DAI
+        B = amount of token B in Uniswap = ETH
+        f = trading fee
+        a = amount of token A that I have
+        b = amount of token B that I need
+        s = amount of token to swap from A to B
+
+        find b and s
+
+        => A * B = K
+
+        => (A + (1-f)s)(B - b) = K
+        (1-f)s : % of s adding to A
+
+                B * ( 1-f)s
+        => b = --------------
+                A + (1 - f)s
+
+        
+        After the swap, the reserve ratio for A to B is
+          A + s      a - s
+        --------- = --------
+          B - b        b
+
+
+        => (1-f)s^2 + A(2-f)s - aA = 0
+
+        => Solving for qudratic equation
+                           +–––––––––––––––––––––––––––––
+               - (2-f)A + \| ((2-f)A)^2 + 4(1-f)Aa
+        => s = ----------------------------------------------
+                            2(1-f) 
+
+        => f = 0.3% = 3/1000
+
+                          +–––––––––––––––––––––––––––––
+               - 1997A + \| 3988009 * A + 3988009 * Aa
+        => s = ----------------------------------------------
+                          1994
+
+      s is the amount of token A we need to swap to token B so that we can miximize liquidity by using the above formula
+
+
 
 */
