@@ -40,8 +40,6 @@ describe("Token", () => {
     it("Should fail if sender doesn't has enough tokens", async () => {
       const initOwnerBalance = await token.balanceOf(owner.address);
 
-      //   await token.connect(addr1).transfer(owner.address, 1);
-
       // FIXME: for ganache-test it's giving an error
       await expect(token.connect(addr1).transfer(owner.address, 1)).to.be.revertedWith("insufficient funds");
 
