@@ -20,4 +20,10 @@ contract Token {
         balanceOf[msg.sender] -= _amount;
         balanceOf[_to] += _amount;
     }
+
+    function mint() external {
+        require(msg.sender == owner, "not owner");
+
+        balanceOf[msg.sender] += 1;
+    }
 }

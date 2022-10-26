@@ -10,6 +10,7 @@
   },
   "scripts": {
     "compile": "npx hardhat compile",
+    "node": "npx hardhat node",
     "test": "npx hardhat test test/Token.ts",
     "ganache-test": "npx hardhat --network localhost test test/Token.ts",
     "goerli-test": "npx hardhat --network goerli test test/Token.ts",
