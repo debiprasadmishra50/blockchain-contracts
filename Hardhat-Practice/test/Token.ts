@@ -63,10 +63,10 @@ describe("Token", () => {
       expect(addr2Balance).to.eq(50);
     });
 
-    it("check", async () => {
-      await expect(token.connect(addr1).mint()).to.be.revertedWith("not owner");
-      // await expect(token.connect(owner).mint()).to.be.revertedWith("not owner");
-      //   await token.connect(owner).mint();
-    });
+    // it("check", async () => {
+    //   await expect(token.connect(addr1).mint()).to.be.revertedWith("not owner");
+    //   // await expect(token.connect(owner).mint()).to.be.revertedWith("not owner");
+    //   //   await token.connect(owner).mint();
+    // });
   });
 });
