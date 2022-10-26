@@ -26,7 +26,7 @@ task("balance", "get account's balance")
 
 const config: HardhatUserConfig = {
   solidity: "0.8.17",
-  defaultNetwork: "localhost",
+  // defaultNetwork: "localhost",
   networks: {
     hardhat: {
       gas: 10000000000,
@@ -34,8 +34,8 @@ const config: HardhatUserConfig = {
     },
     localhost: {
       url: "http://127.0.0.1:8545",
-      gasPrice: 20000000000,
-      chainId: 1337,
+      // gasPrice: 20000000000,
+      // chainId: 1337,
     },
     goerli: {
       url: `https://goerli.infura.io/v3/${process.env.INFURA}`,

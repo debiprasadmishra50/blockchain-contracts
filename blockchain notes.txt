@@ -1730,6 +1730,9 @@ V2 Docs: https://docs.uniswap.org/protocol/V2/reference/smart-contracts/factory
 
 V3 docs: change the version in V2
 
+Good Resource: https://mirror.xyz/roherrera.eth/6hT_130LSkBjFALYUzXVi95TJX3mWdMr049gPfcj3i0
+DEFI-UNI-1: https://jeiwan.net/posts/programming-defi-uniswap-1/
+
 pre-requisites: 
   Liquidity Providers, Traders, Liquidity Pools, Swapping, ETH, ERC20
 

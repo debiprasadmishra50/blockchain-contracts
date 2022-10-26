@@ -42,12 +42,8 @@ describe("Token", () => {
 
       //   await token.connect(addr1).transfer(owner.address, 1);
 
-      //   try {
       // FIXME: for ganache-test it's giving an error
       await expect(token.connect(addr1).transfer(owner.address, 1)).to.be.revertedWith("insufficient funds");
-      //   } catch (err) {
-      //     console.log(err);
-      //   }
 
       expect(await token.balanceOf(owner.address)).to.equal(initOwnerBalance);
     });
@@ -65,6 +61,12 @@ describe("Token", () => {
       expect(addr1Balance).to.eq(100);
       const addr2Balance = await token.balanceOf(addr2.address);
       expect(addr2Balance).to.eq(50);
+    });
+
+    it("check", async () => {
+      await expect(token.connect(addr1).mint()).to.be.revertedWith("not owner");
+      // await expect(token.connect(owner).mint()).to.be.revertedWith("not owner");
+      //   await token.connect(owner).mint();
     });
   });
 });
