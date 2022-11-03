@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >0.8.0;
 
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Strings.sol";
+// import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Strings.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 
 interface IERC165 {
     function supportsInterface(bytes4 interfaceID) external view returns (bool);
