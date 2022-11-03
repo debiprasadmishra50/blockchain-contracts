@@ -11,11 +11,11 @@
   "scripts": {
     "compile": "npx hardhat compile",
     "hardhat-node": "npx hardhat node",
-    "test": "npx hardhat test src/test/Color.ts",
+    "test": "npx hardhat test src/test/Marketplace.ts",
     "goerli-test": "npx hardhat --network goerli test src/test/Token.ts",
     "bsc-test": "npx hardhat --network bsc test src/test/Token.ts",
     "coverage": "npx hardhat coverage",
-    "deploy": "npx hardhat run src/scripts/Color-deploy.ts",
+    "deploy": "npx hardhat run src/scripts/Marketplace-deploy.ts",
     "goerli-deploy": "npx hardhat run scripts/deploy.ts --network goerli",
     "verify": "npx hardhat verify --network goerli <address> <unlock time>"
   },
