@@ -3,24 +3,8 @@ import { ethers } from "ethers";
 import { Row, Form, Button } from "react-bootstrap";
 import { create as ipfsHttpClient } from "ipfs-http-client";
 
-const headers = new Headers();
-headers.set("Access-Control-Allow-Origin", "['*']");
-headers.set("Access-Control-Allow-Credentials", "'true'");
-headers.set("Access-Control-Allow-Methods", ["PUT", "GET", "POST"]);
-
-// console.log(headers.get("Access-Control-Allow-Origin"));
-
 const client = ipfsHttpClient({
-  // url: "http://127.0.0.1:5001/api/v0",
   url: "/ip4/127.0.0.1/tcp/5001",
-  headers: {
-    "'Access-Control-Allow-Origin'": "['*', 'http://localhost:3000','http://127.0.0.1:3000']",
-    "'Access-Control-Allow-Methods'": ["GET", "GET", "POST", "OPTIONS"],
-    Origin: "http://localhost:3000",
-    // crossorigin: "anonymous",
-    // mode: "no-cors",
-  },
-  // headers,
 });
 // console.log(client.getEndpointConfig());
 
@@ -30,9 +14,14 @@ const Create = ({ marketplace, nft }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
+  /* 
+    Run the ipfs using 
+      >> ipfs daemon --offline
+      >> uploaded files will be available in localhost:8080/ipfs/<Hash>
+  */
+
   const uploadToIPFS = async (e) => {
     const id = await client.id();
-    console.log(id);
 
     e.preventDefault();
     const file = e.target.files[0];
@@ -40,7 +29,8 @@ const Create = ({ marketplace, nft }) => {
       try {
         const result = await client.add(file);
         console.log(result);
-        setImage(`http://127.0.0.1:5001/ipfs/${result.path}`);
+        setImage(`http://127.0.0.1:8080/ipfs/${result.path}`);
+        // setImage(`https://ipfs.io/ipfs/${result.path}`);
       } catch (error) {
         console.log("ipfs image upload error: ", error);
       }
@@ -60,7 +50,8 @@ const Create = ({ marketplace, nft }) => {
   };
 
   const mintAndList = async (result) => {
-    const uri = `http://127.0.0.1:5001/ipfs/${result.path}`;
+    const uri = `http://127.0.0.1:8080/ipfs/${result.path}`;
+    // const uri = `https://ipfs.io/ipfs/${result.path}`;
     // mint nft
     await (await nft.mint(uri)).wait();
     // get tokenId of new nft

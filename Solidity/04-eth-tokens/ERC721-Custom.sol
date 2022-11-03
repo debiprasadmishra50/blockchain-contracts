@@ -6,6 +6,22 @@ interface IERC165 {
 }
 
 interface IERC721 is IERC165 {
+    event Transfer(
+        address indexed from,
+        address indexed to,
+        uint256 indexed id
+    );
+    event Approval(
+        address indexed owner,
+        address indexed spender,
+        uint256 indexed id
+    );
+    event ApprovalForAll(
+        address indexed owner,
+        address indexed operator,
+        bool approved
+    );
+
     function balanceOf(address owner) external view returns (uint256 balance);
 
     function ownerOf(uint256 tokenId) external view returns (address owner);
@@ -54,22 +70,6 @@ interface IERC721Receiver {
 }
 
 contract ERC721 is IERC721 {
-    event Transfer(
-        address indexed from,
-        address indexed to,
-        uint256 indexed id
-    );
-    event Approval(
-        address indexed owner,
-        address indexed spender,
-        uint256 indexed id
-    );
-    event ApprovalForAll(
-        address indexed owner,
-        address indexed operator,
-        bool approved
-    );
-
     // store the owner of each nft
     // nftId => owner
     mapping(uint256 => address) internal _ownerOf;
@@ -88,36 +88,12 @@ contract ERC721 is IERC721 {
         public
         override isApprovedForAll;
 
-    function supportsInterface(bytes4 interfaceID)
-        external
-        pure
-        override
-        returns (bool)
-    {
-        return
-            interfaceID == type(IERC721).interfaceId ||
-            interfaceID == type(IERC165).interfaceId;
-    }
-
-    function balanceOf(address owner)
-        external
-        view
-        override
-        returns (uint256 balance)
-    {
-        require(owner != address(0), "owner = zero address");
-        return _balanceOf[owner];
-    }
-
-    function ownerOf(uint256 tokenId)
-        external
-        view
-        override
-        returns (address owner)
-    {
-        owner = _ownerOf[tokenId];
-        require(owner != address(0), "owner = zero address");
-    }
+    function onERC721Received(
+        address operator,
+        address from,
+        uint256 tokenId,
+        bytes calldata data
+    ) external returns (bytes4) {}
 
     function setApprovalForAll(address operator, bool _approved)
         external
@@ -147,6 +123,36 @@ contract ERC721 is IERC721 {
         emit Approval(owner, to, tokenId);
     }
 
+    /// if "to" is a contract, instead of a real user, we need to call onERC721Received()
+    ///
+    function safeTransferFrom(
+        address from,
+        address to,
+        uint256 tokenId
+    ) external override {
+        safeTransferFrom(from, to, tokenId, "");
+    }
+
+    function balanceOf(address owner)
+        external
+        view
+        override
+        returns (uint256 balance)
+    {
+        require(owner != address(0), "owner = zero address");
+        return _balanceOf[owner];
+    }
+
+    function ownerOf(uint256 tokenId)
+        external
+        view
+        override
+        returns (address owner)
+    {
+        owner = _ownerOf[tokenId];
+        require(owner != address(0), "owner = zero address");
+    }
+
     function getApproved(uint256 tokenId)
         external
         view
@@ -157,14 +163,15 @@ contract ERC721 is IERC721 {
         return _approvals[tokenId];
     }
 
-    function _isApprovedOrOwner(
-        address owner,
-        address spender,
-        uint256 tokenId
-    ) internal view returns (bool) {
-        return (spender == owner ||
-            isApprovedForAll[owner][spender] ||
-            spender == _approvals[tokenId]);
+    function supportsInterface(bytes4 interfaceID)
+        external
+        pure
+        override
+        returns (bool)
+    {
+        return
+            interfaceID == type(IERC721).interfaceId ||
+            interfaceID == type(IERC165).interfaceId;
     }
 
     function transferFrom(
@@ -185,16 +192,6 @@ contract ERC721 is IERC721 {
         delete _approvals[tokenId];
 
         emit Transfer(from, to, tokenId);
-    }
-
-    /// if "to" is a contract, instead of a real user, we need to call onERC721Received()
-    ///
-    function safeTransferFrom(
-        address from,
-        address to,
-        uint256 tokenId
-    ) external override {
-        safeTransferFrom(from, to, tokenId, "");
     }
 
     function safeTransferFrom(
@@ -250,12 +247,15 @@ contract ERC721 is IERC721 {
         emit Transfer(owner, address(0), tokenId);
     }
 
-    function onERC721Received(
-        address operator,
-        address from,
-        uint256 tokenId,
-        bytes calldata data
-    ) external returns (bytes4) {}
+    function _isApprovedOrOwner(
+        address owner,
+        address spender,
+        uint256 tokenId
+    ) internal view returns (bool) {
+        return (spender == owner ||
+            isApprovedForAll[owner][spender] ||
+            spender == _approvals[tokenId]);
+    }
 }
 
 contract MyNFT is ERC721 {
