@@ -14,7 +14,7 @@ const client = ipfsHttpClient({
   // url: "http://127.0.0.1:5001/api/v0",
   url: "/ip4/127.0.0.1/tcp/5001",
   headers: {
-    "'Access-Control-Allow-Origin'": "['localhost:3000', '*', 'http://localhost:3000']",
+    "'Access-Control-Allow-Origin'": "['*', 'http://localhost:3000','http://127.0.0.1:3000']",
     "'Access-Control-Allow-Methods'": ["GET", "GET", "POST", "OPTIONS"],
     Origin: "http://localhost:3000",
     // crossorigin: "anonymous",
