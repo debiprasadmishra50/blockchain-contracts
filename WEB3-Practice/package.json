@@ -10,7 +10,8 @@
   },
   "scripts": {
     "start": "ts-node src/app.ts",
-    "start:watch": "nodemon src/app.ts"
+    "start:watch": "nodemon src/app.ts",
+    "deploy": "ts-node src/scripts/deploy.ts"
   },
   "dependencies": {
     "@ethersproject/contracts": "^5.7.0",

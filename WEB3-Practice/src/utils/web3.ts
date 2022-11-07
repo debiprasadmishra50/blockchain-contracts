@@ -1,12 +1,11 @@
 import Web3 from "web3";
 import solc from "solc";
+import smtchecker from "solc/smtchecker";
+import smtsolver from "solc/smtsolver";
 import * as path from "path";
 import fs from "fs";
 
 let web3: Web3;
-type ABI = {
-  contractName: { abi: []; devdoc: {}; evm: {}; ewasm: {}; metadata: ""; storageLayout: {}; userdoc: {} };
-};
 
 type Unit =
   | "noether"
@@ -37,9 +36,15 @@ type Unit =
   | "gether"
   | "tether";
 
-export function initWeb3(uri?: string) {
-  const URI = uri || "http://127.0.0.1:8545";
-  const provider = new Web3.providers.HttpProvider(URI);
+/**
+ * Initialize web3 and return {@link Web3} instance
+ * @param uri RPC url to connect to
+ * @default "http://127.0.0.1:8545"
+ * @returns web3 instance with given provider
+ */
+export function initWeb3(uri: string = "http://127.0.0.1:8545") {
+  // const URI = uri || "http://127.0.0.1:8545";
+  const provider = new Web3.providers.HttpProvider(uri);
   web3 = new Web3(provider);
 
   return web3;
@@ -54,6 +59,12 @@ export async function getAccounts() {
   return accounts;
 }
 
+/**
+ * Generate ABI and save it in abis file
+ * @param fileName contract file name whose abi you want
+ * @param contractName Contract Name
+ * @returns abi of the contractName
+ */
 export function getContractABI(fileName: string, contractName: string) {
   const filePath = path.resolve(__dirname, "../../", "contracts", fileName);
   const content = fs.readFileSync(filePath, { encoding: "utf-8" });
@@ -69,20 +80,30 @@ export function getContractABI(fileName: string, contractName: string) {
           "*": ["*"],
         },
       },
+      modelChecker: {
+        engine: "chc",
+        solvers: ["smtlib2"],
+      },
     },
   };
 
-  const data = JSON.parse(solc.compile(JSON.stringify(input)));
+  const data = JSON.parse(
+    solc.compile(JSON.stringify(input), {
+      smtSolver: smtchecker.smtCallback(smtsolver.smtSolver, smtsolver.availableSolvers[0]),
+    })
+  );
   /* 
     {
         contracts: { contractName: { Intro: [Object] } },
         sources: { contractName: { id: 0 } }
     }
   */
+  // console.log(data);
+
   //   console.log(data.contracts[contractName]);
   const abi = data.contracts[fileName];
-  const outputFileName = Object.keys(abi)[0] + ".json";
-  const outputPath = path.resolve(__dirname, "../../", "abis", outputFileName);
+  // const outputFileName = Object.keys(abi)[0] + ".json";
+  const outputPath = path.resolve(__dirname, "../../", "abis", `${contractName}.json`);
 
   if (fs.existsSync(outputPath)) fs.rmSync(outputPath); // If output file exists, remove the file first
 
@@ -93,10 +114,10 @@ export function getContractABI(fileName: string, contractName: string) {
 
   //   console.log(abi[contractName].abi);
 
-  return abi[contractName].abi;
+  return abi[contractName];
 }
 
-export function getContractInstance(contractABI: Array<any>, contractAddress: string) {
+export function getContractInstance(contractABI: Array<any>, contractAddress?: string) {
   if (!web3) initWeb3();
 
   return new web3.eth.Contract(contractABI, contractAddress);
