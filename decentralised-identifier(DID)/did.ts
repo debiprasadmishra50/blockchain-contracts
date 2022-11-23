@@ -17,7 +17,7 @@ const currentTimeInSecs = () => new Date().getTime() / 1000;
 
 async function app() {
   console.log("[+] Private Address:", process.env.PRIVATE_KEY);
-  console.log("[+] Account Address: ", process.env.ADDRESS);
+  console.log("[+] Account Address:", process.env.ADDRESS);
 
   const signer = did.ES256KSigner(did.hexToBytes(process.env.PRIVATE_KEY));
   const issuer = `did:ethr:${process.env.ADDRESS}`;
@@ -56,7 +56,11 @@ app();
     https://github.com/decentralized-identity/did-resolver
 
     https://www.youtube.com/watch?v=t8lMCmjPKq4 : Introduction to Decentralized Identifiers (DID) - by Ivan Herman (W3C)
+    
+    Slides: 
     https://iherman.github.io/did-talks/talks/2020-Fintech/#/1
+
+    https://www.youtube.com/watch?v=Jcfy9wd5bZI: Decentralized Identifiers (DIDs) - The Fundamental Building Block of Self Sovereign Identity
 
     DID is a URN functionally but for access it can be resolved into 1 or more URLs
     URN: persistent name for a resource that will never change no matter it's location
