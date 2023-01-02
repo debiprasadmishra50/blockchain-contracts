@@ -6,7 +6,7 @@ pragma solidity >=0.5.0;
         - a function does not exist
         - directly send ETH
 
-        ETher is send to this contract
+        ETHer is send to this contract
                     |
             is msg.data empty?
                 /     \

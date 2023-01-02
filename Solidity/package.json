@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "push": "git add -A && git commit -m 'added contracts' && git push origin updates"
+  },
   "dependencies": {
     "@openzeppelin/contracts": "^4.7.3"
   }
