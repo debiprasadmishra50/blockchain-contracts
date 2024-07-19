@@ -1,6 +1,8 @@
 import "@nomicfoundation/hardhat-toolbox";
 import "@nomiclabs/hardhat-ethers";
 import { task } from "hardhat/config";
+import * as temp from "hardhat/config";
+import * as temps from "hardhat";
 
 task("accounts", "Log accounts in use", async (args, hre) => {
   const accounts = await hre.ethers.getSigners();

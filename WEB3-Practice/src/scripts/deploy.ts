@@ -41,6 +41,6 @@ async function deployAndSave(fileName: string, contractName: string) {
   return deployedAddress;
 }
 
-// deployAndSave("01_Intro.sol", "Intro");
+deployAndSave("01_Intro.sol", "Intro");
 
 export default deployAndSave;
