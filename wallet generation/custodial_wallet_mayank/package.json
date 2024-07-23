@@ -1,9 +1,10 @@
 {
-  "name": "test",
+  "name": "custodial_wallet",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "jsonwebtoken": "^8.5.1"
+    "bip39": "^3.0.4",
+    "ethers": "^5.6.5"
   }
 }
