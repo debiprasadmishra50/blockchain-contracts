@@ -2,7 +2,7 @@
 
 ## Distributed Ledger Technology (DLT)
 
-- A distributed ledger technology is like a database that is spead across several sites
+- A Distributed Ledger Technology(DLT) is like a database that is spead across several sites
 - DLT is any system that distributes data across multiple computers/servers/nodes.
 - Several DLTs are
   - Blockchain
