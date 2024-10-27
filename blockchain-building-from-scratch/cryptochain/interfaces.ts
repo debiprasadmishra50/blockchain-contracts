@@ -5,9 +5,16 @@ export interface BlockData {
   lastHash: string;
   hash: string;
   data: any;
+  nonce: number;
+  difficulty: number;
 }
 
 export interface MineBlockData {
-  lastBlock: Block;
+  lastBlock: BlockData;
   data: string;
+}
+
+export interface AdjustDifficulty {
+  originalBlock: BlockData;
+  timestamp: number;
 }
