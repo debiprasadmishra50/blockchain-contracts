@@ -55,10 +55,10 @@ describe("Block", () => {
       expect(minedBlock.lastHash).toEqual(lastBlock.hash);
     });
 
-    it("creates a SHA-256 `hash` based on the priper inputs`", () => {
+    it("creates a SHA-256 `hash` based on the proper inputs`", () => {
       expect(minedBlock.hash).toEqual(
-        // sha256(minedBlock.timestamp, minedBlock.nonce, minedBlock.difficulty, lastBlock.hash, data)
-        binaryHash(minedBlock.timestamp, minedBlock.nonce, minedBlock.difficulty, lastBlock.hash, data)
+        sha256(minedBlock.timestamp, minedBlock.nonce, minedBlock.difficulty, lastBlock.hash, data)
+        // binaryHash(minedBlock.timestamp, minedBlock.nonce, minedBlock.difficulty, lastBlock.hash, data)
       );
     });
 
