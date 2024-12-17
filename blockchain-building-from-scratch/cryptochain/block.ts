@@ -36,10 +36,10 @@ class Block {
       timestamp = Date.now();
       difficulty = Block.adjustDifficulty({ originalBlock: lastBlock, timestamp });
       // NOTE: HEX Version of Hash
-      // hash = sha256(timestamp, lastHash, data, nonce, difficulty);
+      hash = sha256(timestamp, lastHash, data, nonce, difficulty);
 
-      // NOTE: Binary Version of Hash
-      hash = binaryHash(timestamp, lastHash, data, nonce, difficulty);
+      // // NOTE: Binary Version of Hash
+      // hash = binaryHash(timestamp, lastHash, data, nonce, difficulty);
     } while (hash.substring(0, difficulty) !== "0".repeat(difficulty));
 
     return new this({ timestamp, lastHash, nonce, difficulty, hash, data });

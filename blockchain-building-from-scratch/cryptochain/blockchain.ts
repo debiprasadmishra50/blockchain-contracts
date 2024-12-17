@@ -27,7 +27,7 @@ export class Blockchain {
       return;
     }
 
-    console.log("replacing chain with", chain);
+    // console.log("replacing chain with", chain);
 
     this.chain = chain;
   }
@@ -43,10 +43,10 @@ export class Blockchain {
       if (lastHash !== actualLastHash) return false;
 
       // NOTE: HEX Version of Hash
-      // const validatedHash = sha256(timestamp, lastHash, data, nonce, difficulty);
+      const validatedHash = sha256(timestamp, lastHash, data, nonce, difficulty);
 
-      // NOTE: Binary Version of Hash
-      const validatedHash = binaryHash(timestamp, lastHash, data, nonce, difficulty);
+      // // NOTE: Binary Version of Hash
+      // const validatedHash = binaryHash(timestamp, lastHash, data, nonce, difficulty);
 
       if (hash !== validatedHash) return false;
 
