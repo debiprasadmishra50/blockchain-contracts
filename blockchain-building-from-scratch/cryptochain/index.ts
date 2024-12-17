@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import morgan from "morgan";
 import { Blockchain } from "./blockchain";
-import PubSub from "./pubsub";
+import PubSub from "./app/pubsub";
 import axios from "axios";
 
 const app = express();

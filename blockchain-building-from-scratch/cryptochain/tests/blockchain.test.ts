@@ -1,4 +1,4 @@
-import Block from "../block";
+import Block from "../blockchain/block";
 import { Blockchain } from "../blockchain";
 import { sha256 } from "../utils/sha256-hash";
 

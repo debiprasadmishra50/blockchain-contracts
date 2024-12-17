@@ -1,4 +1,4 @@
-import Block from "../block";
+import Block from "../blockchain/block";
 import { MINE_RATE } from "../config";
 import hexToBinary from "../utils/hex-to-binary";
 import { binaryHash, sha256 } from "../utils/sha256-hash";
