@@ -1,0 +1,93 @@
+import { v1 as uuid } from "uuid";
+import Wallet from ".";
+import { SignaturePayload, verifySignature } from "../utils";
+
+type TransactionType = {
+  senderWallet: Wallet;
+  recipient: string;
+  amount: number;
+};
+
+type OutputMap = {
+  [key: string]: number;
+};
+
+type InputParameterType = Pick<TransactionType, "senderWallet"> & {
+  outputMap: OutputMap;
+};
+
+type InputType = Pick<SignaturePayload, "signature"> & {
+  timestamp: number;
+  amount: number;
+  address: string;
+};
+
+class Transaction {
+  readonly id: string;
+  readonly outputMap: OutputMap;
+  input: InputType;
+
+  constructor({ senderWallet, recipient, amount }: TransactionType) {
+    this.id = uuid();
+    this.outputMap = this.createOutputMap({ senderWallet, recipient, amount });
+    this.input = this.createInput({ senderWallet, outputMap: this.outputMap });
+  }
+
+  createOutputMap({ senderWallet, recipient, amount }: TransactionType) {
+    const outputMap: OutputMap = {};
+
+    outputMap[recipient] = amount;
+    outputMap[senderWallet.publicKey] = senderWallet.balance - amount;
+
+    return outputMap;
+  }
+
+  createInput({ senderWallet, outputMap }: InputParameterType) {
+    return {
+      timestamp: Date.now(),
+      amount: senderWallet.balance,
+      address: senderWallet.publicKey,
+      signature: senderWallet.sign(outputMap),
+    };
+  }
+
+  update({ senderWallet, recipient, amount }: TransactionType) {
+    if (amount > this.outputMap[senderWallet.publicKey]) {
+      throw new Error("Amount exceeds balance");
+    }
+
+    if (!this.outputMap[recipient]) {
+      this.outputMap[recipient] = amount;
+    } else {
+      this.outputMap[recipient] = this.outputMap[recipient] + amount;
+    }
+
+    this.outputMap[senderWallet.publicKey] = this.outputMap[senderWallet.publicKey] - amount;
+
+    this.input = this.createInput({ senderWallet, outputMap: this.outputMap });
+  }
+
+  static validTransaction(transaction: Transaction) {
+    const {
+      input: { address, amount, signature },
+      outputMap,
+    } = transaction;
+
+    const outputTotal = Object.values(outputMap).reduce((total, outputAmount) => total + outputAmount);
+
+    if (amount !== outputTotal) {
+      console.error(`Invalid transaction from ${address}`);
+
+      return false;
+    }
+
+    if (!verifySignature({ publicKey: address, data: outputMap, signature })) {
+      console.error(`Invalid Signature from ${address}`);
+
+      return false;
+    }
+    return true;
+  }
+}
+
+export default Transaction;

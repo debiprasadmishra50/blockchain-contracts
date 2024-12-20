@@ -10,3 +10,5 @@ export const GENESIS_DATA = {
   nonce: INITIAL_NONCE,
   difficulty: INITIAL_DIFFICULTY,
 };
+
+export const STARTING_BALANCE = 1000;
