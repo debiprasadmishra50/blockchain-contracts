@@ -1,28 +1,32 @@
 import { createClient } from "redis";
 import { Blockchain as ChainBlock } from "../blockchain";
+import TransactionPool from "../wallet/transaction-pool";
+import Transaction from "../wallet/transaction";
 
 type Publish = {
   channel: string;
   message: string;
 };
 
-type Blockchain = { blockchain: ChainBlock };
+type Blockchain = { blockchain: ChainBlock; transactionPool: TransactionPool };
 
 const CHANNELS = {
   TEST: "TEST",
   BLOCKCHAIN: "BLOCKCHAIN",
+  TRANSACTION: "TRANSACTION",
 };
 
 class PubSub {
   publisher: any;
   subscriber: any;
   blockchain: ChainBlock;
+  transactionPool: TransactionPool;
 
-  constructor({ blockchain }: Blockchain) {
+  constructor({ blockchain, transactionPool }: Blockchain) {
     this.blockchain = blockchain;
     this.publisher = createClient();
     this.subscriber = createClient();
-
+    this.transactionPool = transactionPool;
     // this.subscriber.subscribe(CHANNELS.TEST);
 
     // this.subscriber.on("message", (channel: string, message: string) => this.handleMessage(channel, message));
@@ -43,6 +47,7 @@ class PubSub {
       this.subscribeToChannels();
     })();
   }
+
   subscribeToChannels() {
     Object.values(CHANNELS).forEach(async (channel) => {
       await this.subscriber.subscribe(channel, (message: string, channel: string) => {
@@ -56,8 +61,17 @@ class PubSub {
 
     const parsedMessage = JSON.parse(message);
 
-    if (channel == CHANNELS.BLOCKCHAIN) {
-      this.blockchain.replaceChain(parsedMessage);
+    switch (channel) {
+      case CHANNELS.BLOCKCHAIN:
+        this.blockchain.replaceChain(parsedMessage);
+        break;
+
+      case CHANNELS.TRANSACTION:
+        this.transactionPool.setTransaction(parsedMessage);
+        break;
+
+      default:
+        break;
     }
   }
 
@@ -82,6 +96,13 @@ class PubSub {
     this.publish({
       channel: CHANNELS.BLOCKCHAIN,
       message: JSON.stringify(this.blockchain.chain),
+    });
+  }
+
+  broadcastTransaction(transaction: Transaction | undefined) {
+    this.publish({
+      channel: CHANNELS.TRANSACTION,
+      message: JSON.stringify(transaction),
     });
   }
 }
